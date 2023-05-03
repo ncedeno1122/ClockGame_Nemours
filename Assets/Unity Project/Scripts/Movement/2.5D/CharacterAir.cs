@@ -5,8 +5,6 @@ using UnityEngine.InputSystem;
 
 public class CharacterAir : CharacterState
 {
-    public Vector2 PlayerMovementVector = Vector3.zero;
-
     public CharacterAir(CharacterController2D context) : base(context)
     {
     }
@@ -26,12 +24,10 @@ public class CharacterAir : CharacterState
 
     public override void OnMove(InputAction.CallbackContext ctx)
     {
-        PlayerMovementVector = ctx.ReadValue<Vector2>();
-
         if (ctx.started)
         {
             // Update Facing Direction
-            m_Context.FacingRight = PlayerMovementVector.x >= 0f;
+            m_Context.FacingRight = m_Context.PlayerMovementVector.x >= 0f;
         }
     }
 
@@ -68,7 +64,7 @@ public class CharacterAir : CharacterState
     protected override void MidUpdate()
     {
         // Air Steering Speed
-        m_Context.CharacterVelocity.x += PlayerMovementVector.x * (m_Context.AirSpeedX * Time.deltaTime);
+        m_Context.CharacterVelocity.x += m_Context.PlayerMovementVector.x * (m_Context.AirSpeedX * Time.deltaTime);
 
         m_Context.Rigidbody.MovePosition(m_Context.Rigidbody.position += (m_Context.CharacterVelocity * Time.deltaTime));
     }

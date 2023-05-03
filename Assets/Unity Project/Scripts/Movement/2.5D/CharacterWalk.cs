@@ -11,8 +11,6 @@ public class CharacterWalk : CharacterState
     public float WalkAccelTimerHelper = 0f;
     public float WalkDecelTimerHelper = 0f;
 
-    public Vector2 PlayerMovementVector = Vector2.zero;
-
     public CharacterWalk(CharacterController2D context) : base(context)
     {
     }
@@ -43,11 +41,11 @@ public class CharacterWalk : CharacterState
 
     protected override void MidUpdate()
     {
-        if (PlayerMovementVector != Vector2.zero)
+        if (m_Context.PlayerMovementVector != Vector2.zero)
         {
             // Move
             float accelerationWalkSpeed = Mathf.Lerp(0f, m_Context.WalkSpeed, WalkAccelTimerHelper / WALK_ACCELERATION_TIME);
-            m_Context.CharacterVelocity.x = PlayerMovementVector.x * accelerationWalkSpeed;
+            m_Context.CharacterVelocity.x = m_Context.PlayerMovementVector.x * accelerationWalkSpeed;
         }
         else
         {
@@ -68,14 +66,12 @@ public class CharacterWalk : CharacterState
 
     public override void OnMove(InputAction.CallbackContext ctx)
     {
-        PlayerMovementVector = ctx.ReadValue<Vector2>();
-        
         if (ctx.started)
         {
             WalkAccelTimerHelper = 0f;
 
             // Update Facing Direction
-            m_Context.FacingRight = PlayerMovementVector.x >= 0f;
+            m_Context.FacingRight = m_Context.PlayerMovementVector.x >= 0f;
         }
         if (ctx.canceled)
         {

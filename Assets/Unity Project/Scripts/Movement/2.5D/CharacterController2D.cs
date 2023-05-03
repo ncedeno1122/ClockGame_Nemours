@@ -22,6 +22,7 @@ public class CharacterController2D : MonoBehaviour
     [Range(0.01f, 1f), SerializeField]
     private float m_GroundCheckDistance = 0.2f;
 
+    public Vector2 PlayerMovementVector = Vector2.zero;
     public Vector3 CharacterVelocity = Vector3.zero;
 
     private BoxCollider m_BoxCollider;
@@ -59,6 +60,7 @@ public class CharacterController2D : MonoBehaviour
 
     public void OnMoveIA(InputAction.CallbackContext ctx)
     {
+        PlayerMovementVector = ctx.ReadValue<Vector2>();
         m_CurrentState.OnMove(ctx);
     }
     
