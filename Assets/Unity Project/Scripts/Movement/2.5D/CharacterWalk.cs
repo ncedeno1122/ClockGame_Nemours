@@ -46,12 +46,8 @@ public class CharacterWalk : CharacterState
             TogglePositionBlockScript tpbs = platformRb.GetComponent<TogglePositionBlockScript>();
             if (tpbs && tpbs.IsMoving)
             {
-                Debug.Log("RIDING ON MOVING PLATFORM");
-                m_Context.Rigidbody.velocity = Vector3.zero;
-                //m_Context.Rigidbody.MovePosition(platformRb.position + Vector3.up);
-                //Vector3 relOffset = m_Context.Rigidbody.position - platformRb.position;
                 m_Context.Rigidbody.MovePosition(m_Context.Rigidbody.position + ((tpbs.OffOffset - tpbs.OnOffset) / tpbs.MoveTime) * Time.deltaTime);
-
+                m_Context.Rigidbody.velocity = Vector3.zero;
             }
         }
     }
