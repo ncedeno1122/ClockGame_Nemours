@@ -20,6 +20,9 @@ public class CharacterWalk : CharacterState
     public override void OnEnter()
     {
         Debug.Log($"Entering CharacterWalk");
+        m_Context.IsJumping = false;
+        m_Context.IsFalling = false;
+        m_Context.CharacterVelocity.y = 0f;
     }
 
     public override void OnExit()
@@ -44,17 +47,17 @@ public class CharacterWalk : CharacterState
         {
             // Move
             float accelerationWalkSpeed = Mathf.Lerp(0f, m_Context.WalkSpeed, WalkAccelTimerHelper / WALK_ACCELERATION_TIME);
-            m_Context.CharacterVelocity.x = accelerationWalkSpeed;
-            m_Context.Rigidbody.MovePosition(m_Context.Rigidbody.position + new Vector3(PlayerMovementVector.x * (m_Context.CharacterVelocity.x * Time.deltaTime), 0f));
+            m_Context.CharacterVelocity.x = PlayerMovementVector.x * accelerationWalkSpeed;
         }
         else
         {
             // Stop Moving
             float decelerationWalkSpeed = Mathf.Lerp(m_Context.CharacterVelocity.x, 0f, WalkDecelTimerHelper / WALK_DECELERATION_TIME);
-            float facingDirectionScalar = (m_Context.FacingRight ? 1f : -1f);
             m_Context.CharacterVelocity.x = decelerationWalkSpeed;
-            m_Context.Rigidbody.MovePosition(m_Context.Rigidbody.position + new Vector3(m_Context.CharacterVelocity.x * (facingDirectionScalar * Time.deltaTime), 0f));
         }
+
+        // Finally, MovePosition
+        m_Context.Rigidbody.MovePosition(m_Context.Rigidbody.position + new Vector3((m_Context.CharacterVelocity.x * Time.deltaTime), 0f));
     }
 
     protected override void PostUpdate()
@@ -80,9 +83,14 @@ public class CharacterWalk : CharacterState
         }
     }
 
-    public override void OnJump()
+    public override void OnJump(InputAction.CallbackContext ctx)
     {
-        // Add Velocity, swap to AirState
+        if (ctx.performed)
+        {
+            // Add Velocity, swap to AirState
+            m_Context.CharacterVelocity.y += m_Context.JumpForce;
+            m_Context.ChangeState(new CharacterAir(m_Context));
+        }
     }
 
     public override void OnPowerup(InputAction.CallbackContext ctx)

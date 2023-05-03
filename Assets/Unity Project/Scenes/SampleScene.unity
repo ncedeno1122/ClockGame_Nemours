@@ -753,11 +753,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a997b168bbf2f154cb29ff7bb154486f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WalkSpeed: 7.5
+  WalkSpeed: 6
+  CurrentSpeed: 0
   JumpForce: 10
-  GravityForce: -10
+  GravityForce: -12
+  AirSpeedX: 5
   IsGrounded: 0
+  IsJumping: 0
   IsFalling: 0
+  FacingRight: 1
+  m_GroundCheckDistance: 0.2
+  CharacterVelocity: {x: 0, y: 0, z: 0}
   Rigidbody: {fileID: 0}
 --- !u!114 &2057950788
 MonoBehaviour:

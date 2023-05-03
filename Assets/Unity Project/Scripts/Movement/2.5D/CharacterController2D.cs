@@ -13,11 +13,14 @@ public class CharacterController2D : MonoBehaviour
     public float CurrentSpeed = 0f;
     public float JumpForce = 10f;
     public float GravityForce = -10f;
+    public float AirSpeedX = 2f;
     public bool IsGrounded;
-    public bool IsFalling;
+    public bool IsJumping = false;
+    public bool IsFalling = false;
     public bool FacingRight = true;
 
-    private float m_GroundCheckDistance = 0.25f;
+    [Range(0.01f, 1f), SerializeField]
+    private float m_GroundCheckDistance = 0.2f;
 
     public Vector3 CharacterVelocity = Vector3.zero;
 
@@ -61,7 +64,7 @@ public class CharacterController2D : MonoBehaviour
     
     public void OnJumpIA(InputAction.CallbackContext ctx)
     {
-        m_CurrentState.OnJump();
+        m_CurrentState.OnJump(ctx);
     }
     
     public void OnPowerupIA(InputAction.CallbackContext ctx)
