@@ -20,10 +20,15 @@ public class CharacterController2D : MonoBehaviour
     public bool FacingRight = true;
 
     [Range(0.01f, 1f), SerializeField]
-    private float m_GroundCheckDistance = 0.2f;
+    private float m_GroundCheckDistance = 0.3f;
 
     public Vector2 PlayerMovementVector = Vector2.zero;
     public Vector3 CharacterVelocity = Vector3.zero;
+
+    public RaycastHit LeftCastHit;
+    public RaycastHit RightCastHit;
+    public GameObject LeftCastGO;
+    public GameObject RightCastGO;
 
     private BoxCollider m_BoxCollider;
     public Rigidbody Rigidbody;
@@ -95,23 +100,44 @@ public class CharacterController2D : MonoBehaviour
     // TODO: This function will need to be optimized.
     public void GroundCheck()
     {
-        Vector3 leftCastPoint = m_BoxCollider.transform.position + new Vector3(-m_BoxCollider.size.x/2f, -m_BoxCollider.size.y/3f);
-        Vector3 rightCastPoint = m_BoxCollider.transform.position + new Vector3(m_BoxCollider.size.x/2f, -m_BoxCollider.size.y/3f);
+        Vector3 leftCastPoint = m_BoxCollider.transform.position + new Vector3(-m_BoxCollider.size.x/2f, -m_BoxCollider.size.y/4f);
+        Vector3 rightCastPoint = m_BoxCollider.transform.position + new Vector3(m_BoxCollider.size.x/2f, -m_BoxCollider.size.y/4f);
         Vector3 localDownDirection = transform.TransformDirection(Vector3.down);
         LayerMask mask = LayerMask.GetMask("StaticLevel", "Platforms");
 
         // Lefthand Cast
-        RaycastHit leftCastHit;
-        Physics.Raycast(leftCastPoint, localDownDirection, out leftCastHit, m_GroundCheckDistance, mask);
+        //RaycastHit leftCastHit;
+        Physics.Raycast(leftCastPoint, localDownDirection, out LeftCastHit, m_GroundCheckDistance, mask);
 
         // Righthand Cast
-        RaycastHit rightCastHit;
-        Physics.Raycast(rightCastPoint, localDownDirection, out rightCastHit, m_GroundCheckDistance, mask);
+        //RaycastHit rightCastHit;
+        Physics.Raycast(rightCastPoint, localDownDirection, out RightCastHit, m_GroundCheckDistance, mask);
 
         // Determine Grounded Logic - Are we hitting a collider on both casts?
         // TODO: Must this be the same collider?
         // TODO: What about hanging-over-ledge-logic? Worry about this later.
-        IsGrounded = leftCastHit.collider || rightCastHit.collider;
+        
+        IsGrounded = (LeftCastHit.collider && !LeftCastHit.collider.isTrigger) ||
+                     (RightCastHit.collider && !RightCastHit.collider.isTrigger);
+        LeftCastGO = (LeftCastHit.transform?.gameObject) ? LeftCastHit.transform.gameObject : null;
+        RightCastGO = (RightCastHit.transform?.gameObject) ? RightCastHit.transform.gameObject : null;
+    }
+
+    // + + + + | Collision Methods | + + + + 
+
+    private void OnTriggerEnter(Collider other)
+    {
+        CurrentState.OnTriggerEnter(other);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        CurrentState.OnTriggerStay(other);
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        CurrentState.OnTriggerExit(other);
     }
 
     private void OnDrawGizmos()
@@ -121,7 +147,7 @@ public class CharacterController2D : MonoBehaviour
         Gizmos.color = Color.blue;
         Vector3 leftCastPoint = m_BoxCollider.transform.position + new Vector3(-m_BoxCollider.size.x/2f, -m_BoxCollider.size.y/3f);
         Vector3 rightCastPoint = m_BoxCollider.transform.position + new Vector3(m_BoxCollider.size.x/2f, -m_BoxCollider.size.y/3f);
-        Vector3 localDownDirection = transform.TransformDirection(Vector3.down);
+        //Vector3 localDownDirection = transform.TransformDirection(Vector3.down);
         Gizmos.DrawLine(leftCastPoint, leftCastPoint - Vector3.up * m_GroundCheckDistance);
         Gizmos.DrawLine(rightCastPoint, rightCastPoint - Vector3.up * m_GroundCheckDistance);
 

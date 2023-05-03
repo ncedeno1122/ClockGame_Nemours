@@ -13,12 +13,6 @@ public class PendulumObserver : MonoBehaviour
         GameObject.Find("Player").GetComponent<PendulumAbility>().AddObserver(this);
     }
 
-    private void OnDisable()
-    {
-        // TODO: Find the Player and subscribe to their Pendulum Ability
-        GameObject.Find("Player").GetComponent<PendulumAbility>().RemoveObserver(this);
-    }
-
     // + + + + | Functions | + + + + 
 
     public void OnPendulum()

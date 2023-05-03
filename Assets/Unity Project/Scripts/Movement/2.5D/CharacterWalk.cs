@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -37,6 +38,22 @@ public class CharacterWalk : CharacterState
         {
             m_Context.ChangeState(new CharacterAir(m_Context));
         }
+
+        // Moving Platform?
+        Rigidbody platformRb = m_Context.LeftCastHit.rigidbody ?? m_Context.RightCastHit.rigidbody;
+        if (platformRb && platformRb.gameObject.layer == LayerMask.NameToLayer("Platforms"))
+        {
+            TogglePositionBlockScript tpbs = platformRb.GetComponent<TogglePositionBlockScript>();
+            if (tpbs && tpbs.IsMoving)
+            {
+                Debug.Log("RIDING ON MOVING PLATFORM");
+                m_Context.Rigidbody.velocity = Vector3.zero;
+                //m_Context.Rigidbody.MovePosition(platformRb.position + Vector3.up);
+                //Vector3 relOffset = m_Context.Rigidbody.position - platformRb.position;
+                m_Context.Rigidbody.MovePosition(m_Context.Rigidbody.position + ((tpbs.OffOffset - tpbs.OnOffset) / tpbs.MoveTime) * Time.deltaTime);
+
+            }
+        }
     }
 
     protected override void MidUpdate()
@@ -63,6 +80,8 @@ public class CharacterWalk : CharacterState
         Mathf.Clamp(WalkAccelTimerHelper += Time.deltaTime, 0f, WALK_ACCELERATION_TIME);
         Mathf.Clamp(WalkDecelTimerHelper += Time.deltaTime, 0f, WALK_DECELERATION_TIME);
     }
+
+    // + + + + | InputActions | + + + + 
 
     public override void OnMove(InputAction.CallbackContext ctx)
     {
@@ -110,4 +129,40 @@ public class CharacterWalk : CharacterState
     {
         //
     }
+
+    // + + + + | Collision Handling | + + + + 
+
+    public override void OnTriggerEnter(Collider other)
+    {
+        //
+    }
+
+    public override void OnTriggerStay(Collider other)
+    {
+        //if (other.gameObject.layer == LayerMask.NameToLayer("Platforms"))
+        //{
+        //    //Debug.Log("Found a platform!");
+        //    // Moving Platform?
+        //    TogglePositionBlockScript tpbs = other.gameObject.GetComponent<TogglePositionBlockScript>();
+        //    if (tpbs != null)
+        //    {
+        //        // Try and bind to the platform as it moves...
+        //        Debug.Log("Setting velocity to zero...");
+        //        m_Context.Rigidbody.velocity = Vector3.zero;
+                
+        //        // If there's a horizontal component to the movement,
+        //        if (tpbs.OnOffset.x - tpbs.OffOffset.x != 0f)
+        //        {
+        //            //
+        //        }
+
+        //    }
+        //}
+    }
+
+    public override void OnTriggerExit(Collider other)
+    {
+        //
+    }
+
 }

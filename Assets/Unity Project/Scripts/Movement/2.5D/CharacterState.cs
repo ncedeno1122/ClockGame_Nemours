@@ -34,4 +34,10 @@ public abstract class CharacterState
 
     // Next State - for AbilityStates!
     public abstract void AdvanceState();
+
+    // Collision Functions
+    public abstract void OnTriggerEnter(Collider other);
+    public abstract void OnTriggerStay(Collider other);
+    public abstract void OnTriggerExit(Collider other);
+
 }

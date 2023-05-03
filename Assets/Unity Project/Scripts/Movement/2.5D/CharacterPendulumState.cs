@@ -24,18 +24,6 @@ public class CharacterPendulumState : CharacterState
         //Debug.Log("Exiting PendulumState!");
     }
 
-    public override void OnAbility(InputAction.CallbackContext ctx)
-    {
-    }
-
-    public override void OnJump(InputAction.CallbackContext ctx)
-    {
-    }
-
-    public override void OnMove(InputAction.CallbackContext ctx)
-    {
-    }
-
     protected override void PreUpdate()
     {
     }
@@ -45,6 +33,20 @@ public class CharacterPendulumState : CharacterState
     }
 
     protected override void PostUpdate()
+    {
+    }
+
+    // + + + + | InputActions | + + + + 
+
+    public override void OnAbility(InputAction.CallbackContext ctx)
+    {
+    }
+
+    public override void OnJump(InputAction.CallbackContext ctx)
+    {
+    }
+
+    public override void OnMove(InputAction.CallbackContext ctx)
     {
     }
 
@@ -58,5 +60,22 @@ public class CharacterPendulumState : CharacterState
         {
             m_Context.ChangeState(new CharacterAir(m_Context));
         }
+    }
+
+    // + + + + | Collision Handling | + + + + 
+
+    public override void OnTriggerEnter(Collider other)
+    {
+        //
+    }
+
+    public override void OnTriggerStay(Collider other)
+    {
+        //
+    }
+
+    public override void OnTriggerExit(Collider other)
+    {
+        //
     }
 }

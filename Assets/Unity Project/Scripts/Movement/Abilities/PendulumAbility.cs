@@ -8,10 +8,17 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class PendulumAbility : Ability
 {
-    private float m_AbilityStartTime = 0.2f;
-    private float m_AbilityEndTime = 0.2f;
+    private float m_AbilityStartTime = 0.125f;
+    private float m_AbilityEndTime = 0.125f;
     private List<PendulumObserver> m_PendulumObservers = new List<PendulumObserver>();
     private IEnumerator m_AbilityCRT;
+
+    private void OnDisable()
+    {
+        m_PendulumObservers.Clear();
+    }
+
+    //
 
     public override void OnAbility()
     {
@@ -37,8 +44,7 @@ public class PendulumAbility : Ability
         else
         {
             //Debug.LogWarning("AbilityCRT wasn't null..?");
-            StopCoroutine(m_AbilityCRT);
-            m_AbilityCRT = null;
+            StopAbilityCRT();
             ActivateAbility();
         }
     }
