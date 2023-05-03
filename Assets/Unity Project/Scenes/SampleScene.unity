@@ -236,9 +236,9 @@ MonoBehaviour:
   OnPendulumEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 34241805}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
+      - m_Target: {fileID: 34241807}
+        m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
+        m_MethodName: set_enabled
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -941,3 +941,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsEnabled: 0
+  m_PendulumObservers: []

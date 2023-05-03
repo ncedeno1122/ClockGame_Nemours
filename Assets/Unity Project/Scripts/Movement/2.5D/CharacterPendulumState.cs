@@ -14,14 +14,14 @@ public class CharacterPendulumState : CharacterState
 
     public override void OnEnter()
     {
-        Debug.Log("Entering PendulumState!");
+        //Debug.Log("Entering PendulumState!");
 
         m_PendulumAbility.OnAbility();
     }
 
     public override void OnExit()
     {
-        Debug.Log("Exiting PendulumState!");
+        //Debug.Log("Exiting PendulumState!");
     }
 
     public override void OnAbility(InputAction.CallbackContext ctx)

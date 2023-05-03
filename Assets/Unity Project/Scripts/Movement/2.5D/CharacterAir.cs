@@ -33,6 +33,19 @@ public class CharacterAir : CharacterState
 
     public override void OnAbility(InputAction.CallbackContext ctx)
     {
+        if (ctx.performed)
+        {
+            Ability currAbility = m_Context.AbilityManager.CurrentAbility;
+            if (currAbility != null)
+            {
+                switch (currAbility)
+                {
+                    case PendulumAbility:
+                        m_Context.ChangeState(new CharacterPendulumState(m_Context));
+                        break;
+                }
+            }
+        }
     }
 
     protected override void PreUpdate()

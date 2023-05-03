@@ -17,7 +17,7 @@ public class CharacterWalk : CharacterState
 
     public override void OnEnter()
     {
-        Debug.Log($"Entering CharacterWalk");
+        //Debug.Log($"Entering CharacterWalk");
         m_Context.IsJumping = false;
         m_Context.IsFalling = false;
         m_Context.CharacterVelocity.y = 0f;
@@ -25,7 +25,7 @@ public class CharacterWalk : CharacterState
 
     public override void OnExit()
     {
-        Debug.Log($"Exiting CharacterWalk");
+        //Debug.Log($"Exiting CharacterWalk");
     }
 
     protected override void PreUpdate()
@@ -91,14 +91,17 @@ public class CharacterWalk : CharacterState
 
     public override void OnAbility(InputAction.CallbackContext ctx)
     {
-        Ability currAbility = m_Context.AbilityManager.CurrentAbility;
-        if (currAbility != null)
+        if (ctx.performed)
         {
-            switch (currAbility)
+            Ability currAbility = m_Context.AbilityManager.CurrentAbility;
+            if (currAbility != null)
             {
-                case PendulumAbility:
-                    m_Context.ChangeState(new CharacterPendulumState(m_Context));
-                    break;
+                switch (currAbility)
+                {
+                    case PendulumAbility:
+                        m_Context.ChangeState(new CharacterPendulumState(m_Context));
+                        break;
+                }
             }
         }
     }

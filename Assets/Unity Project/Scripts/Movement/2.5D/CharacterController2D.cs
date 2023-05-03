@@ -29,6 +29,8 @@ public class CharacterController2D : MonoBehaviour
     public Rigidbody Rigidbody;
 
     private CharacterState m_CurrentState;
+    public CharacterState CurrentState { get => m_CurrentState; }
+
     private PlayerInput m_PlayerInput;
     private InputAction m_MoveIA, m_JumpIA, m_AbilityIA;
 
