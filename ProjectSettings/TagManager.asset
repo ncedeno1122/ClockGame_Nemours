@@ -8,11 +8,11 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Entities
   - Water
   - UI
-  - 
-  - 
+  - StaticLevel
+  - Platforms
   - 
   - 
   - 
