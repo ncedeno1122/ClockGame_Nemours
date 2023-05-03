@@ -756,13 +756,14 @@ MonoBehaviour:
   WalkSpeed: 6
   CurrentSpeed: 0
   JumpForce: 10
-  GravityForce: -12
-  AirSpeedX: 5
+  GravityForce: -15
+  AirSpeedX: 8
   IsGrounded: 0
   IsJumping: 0
   IsFalling: 0
   FacingRight: 1
   m_GroundCheckDistance: 0.2
+  PlayerMovementVector: {x: 0, y: 0}
   CharacterVelocity: {x: 0, y: 0, z: 0}
   Rigidbody: {fileID: 0}
 --- !u!114 &2057950788

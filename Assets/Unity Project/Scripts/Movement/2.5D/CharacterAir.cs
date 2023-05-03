@@ -52,6 +52,9 @@ public class CharacterAir : CharacterState
 
         // Apply Gravity
         m_Context.CharacterVelocity.y += m_Context.GravityForce * (Time.deltaTime);
+
+        // Apply Terminal Velocity
+        m_Context.CharacterVelocity.y = Mathf.Clamp(m_Context.CharacterVelocity.y, m_Context.GravityForce, Mathf.Infinity);
     }
 
     private void CheckAerialState()

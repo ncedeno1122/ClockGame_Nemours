@@ -13,7 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "DevLogs/2023-05-02.md",
+                "file": "GDD.md",
                 "mode": "source",
                 "source": false
               }
@@ -85,7 +85,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "DevLogs/2023-05-02.md",
+                "file": "GDD.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -102,7 +102,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "DevLogs/2023-05-02.md",
+                "file": "GDD.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -125,7 +125,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "DevLogs/2023-05-02.md"
+                "file": "GDD.md"
               }
             }
           }
@@ -148,10 +148,10 @@
   },
   "active": "fce8ba784b1c60f3",
   "lastOpenFiles": [
+    "DevLogs/2023-05-02.md",
     "DevLogs.meta",
     "DevLogs/2023-05-02.md.meta",
     "GDD.md",
-    "DevLogs/2023-05-02.md",
     "Untitled.md",
     "DevLogs",
     "GDD.md.meta"
