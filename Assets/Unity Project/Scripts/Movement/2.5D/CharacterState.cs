@@ -30,5 +30,8 @@ public abstract class CharacterState
     // Input Functions
     public abstract void OnMove(InputAction.CallbackContext ctx);
     public abstract void OnJump(InputAction.CallbackContext ctx);
-    public abstract void OnPowerup(InputAction.CallbackContext ctx);
+    public abstract void OnAbility(InputAction.CallbackContext ctx);
+
+    // Next State - for AbilityStates!
+    public abstract void AdvanceState();
 }

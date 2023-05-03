@@ -31,7 +31,7 @@ public class CharacterAir : CharacterState
         }
     }
 
-    public override void OnPowerup(InputAction.CallbackContext ctx)
+    public override void OnAbility(InputAction.CallbackContext ctx)
     {
     }
 
@@ -74,5 +74,10 @@ public class CharacterAir : CharacterState
 
     protected override void PostUpdate()
     {
+    }
+
+    public override void AdvanceState()
+    {
+        //
     }
 }

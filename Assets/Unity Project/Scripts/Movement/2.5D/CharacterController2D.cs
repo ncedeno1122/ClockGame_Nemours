@@ -30,17 +30,20 @@ public class CharacterController2D : MonoBehaviour
 
     private CharacterState m_CurrentState;
     private PlayerInput m_PlayerInput;
-    private InputAction m_MoveIA, m_JumpIA, m_PowerupIA;
+    private InputAction m_MoveIA, m_JumpIA, m_AbilityIA;
+
+    public AbilityManager AbilityManager;
 
     private void Awake()
     {
         m_BoxCollider = GetComponent<BoxCollider>();
         Rigidbody = GetComponent<Rigidbody>();
         m_PlayerInput = GetComponent<PlayerInput>();
+        AbilityManager = GetComponent<AbilityManager>();
 
         m_MoveIA = m_PlayerInput.actions["Move"];
         m_JumpIA = m_PlayerInput.actions["Jump"];
-        m_PowerupIA = m_PlayerInput.actions["Powerup"];
+        m_AbilityIA = m_PlayerInput.actions["Ability"];
     }
 
     void Start()
@@ -69,9 +72,9 @@ public class CharacterController2D : MonoBehaviour
         m_CurrentState.OnJump(ctx);
     }
     
-    public void OnPowerupIA(InputAction.CallbackContext ctx)
+    public void OnAbilityIA(InputAction.CallbackContext ctx)
     {
-        m_CurrentState.OnPowerup(ctx);
+        m_CurrentState.OnAbility(ctx);
     }
 
     // + + + + | Functions | + + + + 
@@ -130,6 +133,9 @@ public class CharacterController2D : MonoBehaviour
                     break;
                 case CharacterAir:
                     Gizmos.color = Color.yellow;
+                    break;
+                case CharacterPendulumState:
+                    Gizmos.color = Color.cyan;
                     break;
             }
 

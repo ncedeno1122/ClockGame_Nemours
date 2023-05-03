@@ -89,7 +89,21 @@ public class CharacterWalk : CharacterState
         }
     }
 
-    public override void OnPowerup(InputAction.CallbackContext ctx)
+    public override void OnAbility(InputAction.CallbackContext ctx)
+    {
+        Ability currAbility = m_Context.AbilityManager.CurrentAbility;
+        if (currAbility != null)
+        {
+            switch (currAbility)
+            {
+                case PendulumAbility:
+                    m_Context.ChangeState(new CharacterPendulumState(m_Context));
+                    break;
+            }
+        }
+    }
+
+    public override void AdvanceState()
     {
         //
     }

@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 34241808}
   - component: {fileID: 34241807}
   - component: {fileID: 34241806}
+  - component: {fileID: 34241810}
   m_Layer: 7
   m_Name: Cube (2)
   m_TagString: Untagged
@@ -220,6 +221,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &34241810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34241805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc424b81229143e43b33192162c1ab29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnPendulumEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 34241805}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -689,6 +717,8 @@ GameObject:
   - component: {fileID: 2057950786}
   - component: {fileID: 2057950788}
   - component: {fileID: 2057950787}
+  - component: {fileID: 2057950789}
+  - component: {fileID: 2057950790}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -766,6 +796,7 @@ MonoBehaviour:
   PlayerMovementVector: {x: 0, y: 0}
   CharacterVelocity: {x: 0, y: 0, z: 0}
   Rigidbody: {fileID: 0}
+  AbilityManager: {fileID: 0}
 --- !u!114 &2057950788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -867,7 +898,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2057950787}
         m_TargetAssemblyTypeName: CharacterController2D, CC2DAssembly
-        m_MethodName: OnPowerupIA
+        m_MethodName: OnAbilityIA
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -884,3 +915,29 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &2057950789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057950783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ccb40b4b8cfe5844885ac8151dfe20b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TotalAbilities: []
+--- !u!114 &2057950790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057950783}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1cfc1e21c2790a41bcbfe6cb0bc6249, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsEnabled: 0

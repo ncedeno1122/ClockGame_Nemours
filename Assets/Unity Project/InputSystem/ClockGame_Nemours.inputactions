@@ -24,7 +24,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Powerup",
+                    "name": "Ability",
                     "type": "Button",
                     "id": "17347eff-7f50-486e-a3b3-5b64d239797a",
                     "expectedControlType": "Button",
@@ -173,7 +173,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Powerup",
+                    "action": "Ability",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -184,7 +184,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "Powerup",
+                    "action": "Ability",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
