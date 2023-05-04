@@ -50,7 +50,7 @@ public class CharacterPendulumState : CharacterState
 
     protected override void PostFixedUpdate()
     {
-        //
+        m_Context.Rigidbody.velocity = Vector3.zero;
     }
 
     // + + + + | InputActions | + + + + 

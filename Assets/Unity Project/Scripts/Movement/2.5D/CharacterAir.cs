@@ -64,7 +64,7 @@ public class CharacterAir : CharacterState
 
     protected override void PostFixedUpdate()
     {
-        //
+        m_Context.Rigidbody.velocity = Vector3.zero;
     }
 
     private void CheckAerialState()

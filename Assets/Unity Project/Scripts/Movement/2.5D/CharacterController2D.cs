@@ -9,18 +9,18 @@ using UnityEngine.InputSystem;
 
 public class CharacterController2D : MonoBehaviour
 {
-    public float WalkSpeed = 5f;
+    public float WalkSpeed = 7.5f;
     public float CurrentSpeed = 0f;
-    public float JumpForce = 10f;
-    public float GravityForce = -10f;
-    public float AirSpeedX = 2f;
+    public float JumpForce = 15f;
+    public float GravityForce = -20f;
+    public float AirSpeedX = 10f;
     public bool IsGrounded;
     public bool IsJumping = false;
     public bool IsFalling = false;
     public bool FacingRight = true;
 
-    [Range(0.01f, 1f), SerializeField]
-    private float m_GroundCheckDistance = 0.3f;
+    [Range(0.01f, 1f)]
+    public float GroundCheckDistance = 0.3f;
 
     public Vector2 PlayerMovementVector = Vector2.zero;
     public Vector3 CharacterVelocity = Vector3.zero;
@@ -37,7 +37,7 @@ public class CharacterController2D : MonoBehaviour
     public CharacterState CurrentState { get => m_CurrentState; }
 
     private PlayerInput m_PlayerInput;
-    private InputAction m_MoveIA, m_JumpIA, m_AbilityIA;
+    private InputAction m_MoveIA, m_JumpIA, m_AbilityIA, m_AbilitySwapIA;
 
     public AbilityManager AbilityManager;
 
@@ -51,6 +51,7 @@ public class CharacterController2D : MonoBehaviour
         m_MoveIA = m_PlayerInput.actions["Move"];
         m_JumpIA = m_PlayerInput.actions["Jump"];
         m_AbilityIA = m_PlayerInput.actions["Ability"];
+        m_AbilitySwapIA = m_PlayerInput.actions["AbilitySwap"];
     }
 
     void Start()
@@ -92,6 +93,11 @@ public class CharacterController2D : MonoBehaviour
         m_CurrentState.OnAbility(ctx);
     }
 
+    public void OnAbilitySwapIA(InputAction.CallbackContext ctx)
+    {
+        m_CurrentState.OnAbilitySwap(ctx);
+    }
+
     // + + + + | Functions | + + + + 
 
     public void ChangeState(CharacterState newState)
@@ -115,11 +121,11 @@ public class CharacterController2D : MonoBehaviour
 
         // Lefthand Cast
         //RaycastHit leftCastHit;
-        Physics.Raycast(leftCastPoint, localDownDirection, out LeftCastHit, m_GroundCheckDistance, mask);
+        Physics.Raycast(leftCastPoint, localDownDirection, out LeftCastHit, GroundCheckDistance, mask, QueryTriggerInteraction.Ignore);
 
         // Righthand Cast
         //RaycastHit rightCastHit;
-        Physics.Raycast(rightCastPoint, localDownDirection, out RightCastHit, m_GroundCheckDistance, mask);
+        Physics.Raycast(rightCastPoint, localDownDirection, out RightCastHit, GroundCheckDistance, mask, QueryTriggerInteraction.Ignore);
 
         // Determine Grounded Logic - Are we hitting a collider on both casts?
         // TODO: Must this be the same collider?
@@ -156,8 +162,8 @@ public class CharacterController2D : MonoBehaviour
         Vector3 leftCastPoint = m_BoxCollider.transform.position + new Vector3(-m_BoxCollider.size.x/2f, -m_BoxCollider.size.y/3f);
         Vector3 rightCastPoint = m_BoxCollider.transform.position + new Vector3(m_BoxCollider.size.x/2f, -m_BoxCollider.size.y/3f);
         //Vector3 localDownDirection = transform.TransformDirection(Vector3.down);
-        Gizmos.DrawLine(leftCastPoint, leftCastPoint - Vector3.up * m_GroundCheckDistance);
-        Gizmos.DrawLine(rightCastPoint, rightCastPoint - Vector3.up * m_GroundCheckDistance);
+        Gizmos.DrawLine(leftCastPoint, leftCastPoint - Vector3.up * GroundCheckDistance);
+        Gizmos.DrawLine(rightCastPoint, rightCastPoint - Vector3.up * GroundCheckDistance);
 
         // Current CharacterState
         if (m_CurrentState != null)
@@ -172,6 +178,9 @@ public class CharacterController2D : MonoBehaviour
                     break;
                 case CharacterPendulumState:
                     Gizmos.color = Color.cyan;
+                    break;
+                case CharacterHandsState:
+                    Gizmos.color = Color.red;
                     break;
             }
 

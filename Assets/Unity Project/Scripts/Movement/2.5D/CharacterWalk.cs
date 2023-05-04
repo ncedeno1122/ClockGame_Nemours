@@ -95,7 +95,7 @@ public class CharacterWalk : CharacterState
 
     protected override void PostFixedUpdate()
     {
-        //
+        m_Context.Rigidbody.velocity = Vector3.zero;
     }
 
     // + + + + | InputActions | + + + + 
@@ -136,6 +136,9 @@ public class CharacterWalk : CharacterState
                 {
                     case PendulumAbility:
                         m_Context.ChangeState(new CharacterPendulumState(m_Context));
+                        break;
+                    case HandsAbility:
+                        m_Context.ChangeState(new CharacterHandsState(m_Context));
                         break;
                 }
             }

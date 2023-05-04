@@ -44,6 +44,14 @@ public abstract class CharacterState
     public abstract void OnMove(InputAction.CallbackContext ctx);
     public abstract void OnJump(InputAction.CallbackContext ctx);
     public abstract void OnAbility(InputAction.CallbackContext ctx);
+    public virtual void OnAbilitySwap(InputAction.CallbackContext ctx)
+    {
+        // TODO: For Button input, maybe Vector2 to go back & forth?
+        if (ctx.performed)
+        {
+            m_Context.AbilityManager.NextAbility();
+        }
+    }
 
     // Next State - for AbilityStates!
     public abstract void AdvanceState();

@@ -9,10 +9,12 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class AbilityManager : MonoBehaviour
 {
+    [SerializeField]
     private int m_CurrAbilityIndex = 0;
 
     public Ability CurrentAbility { get; private set; }
     public PendulumAbility PendulumAbility { get; private set; }
+    public HandsAbility HandsAbility { get; private set; }
 
     public List<Ability> TotalAbilities = new();
 
@@ -20,6 +22,7 @@ public class AbilityManager : MonoBehaviour
     {
         // Get individual components
         PendulumAbility = GetComponent<PendulumAbility>();
+        HandsAbility = GetComponent<HandsAbility>();
 
         // Find and Equip Abilities
         TotalAbilities.AddRange(GetComponents<Ability>());
@@ -36,14 +39,16 @@ public class AbilityManager : MonoBehaviour
     public void NextAbility()
     {
         // Map ability index
-        m_CurrAbilityIndex = TotalAbilities.Count % (++m_CurrAbilityIndex);
+        m_CurrAbilityIndex = (int) Mathf.Repeat(m_CurrAbilityIndex + 1, TotalAbilities.Count);
         CurrentAbility = TotalAbilities[m_CurrAbilityIndex];
+        Debug.Log($"NextAbility! CurrentAbility is {CurrentAbility}");
     }
 
     public void PreviousAbility()
     {
         // Map ability index
-        m_CurrAbilityIndex = TotalAbilities.Count % (--m_CurrAbilityIndex);
+        m_CurrAbilityIndex = (int)Mathf.Repeat(m_CurrAbilityIndex - 1, TotalAbilities.Count);
         CurrentAbility = TotalAbilities[m_CurrAbilityIndex];
+        Debug.Log($"PreviousAbility! CurrentAbility is {CurrentAbility}");
     }
 }
