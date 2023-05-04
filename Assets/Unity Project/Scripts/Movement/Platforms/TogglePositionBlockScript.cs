@@ -49,8 +49,11 @@ public class TogglePositionBlockScript : MonoBehaviour
     public void Toggle()
     {
         // Toggle Variable
-        ToggledOn = !ToggledOn;
-        MoveToPosition();
+        if (!IsMoving)
+        {
+            ToggledOn = !ToggledOn;
+            MoveToPosition();
+        }
     }
 
     private void MoveToPosition()
@@ -97,20 +100,12 @@ public class TogglePositionBlockScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // If the player is 'riding' this,
-        //if (other.gameObject.CompareTag("Player") && !other.isTrigger)
-        //{
-        //    EntitiesOnBlock.Add(other.gameObject.GetComponent<Rigidbody>());
-        //}
+
     }
 
     private void OnTriggerExit(Collider other)
     {
-        // If the player is 'riding' this,
-        //if (other.gameObject.CompareTag("Player") && !other.isTrigger)
-        //{
-        //    EntitiesOnBlock.Remove(other.gameObject.GetComponent<Rigidbody>());
-        //}
+
     }
 
     private void OnDrawGizmos()
