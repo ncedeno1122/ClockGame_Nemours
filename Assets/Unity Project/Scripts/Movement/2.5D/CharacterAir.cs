@@ -18,8 +18,23 @@ public class CharacterAir : CharacterState
 
     protected override void PreUpdate()
     {
-        CheckAerialState();
+        
+    }
 
+    protected override void MidUpdate()
+    {
+        // Air Steering Speed
+        m_Context.CharacterVelocity.x += m_Context.PlayerMovementVector.x * (m_Context.AirSpeedX * Time.deltaTime);
+    }
+
+    protected override void PostUpdate()
+    {
+    }
+
+    // + + + + | FixedUpdate Functions | + + + +  
+
+    protected override void PreFixedUpdate()
+    {
         // Groundcheck
         if (!m_Context.IsJumping)
         {
@@ -31,6 +46,9 @@ public class CharacterAir : CharacterState
             }
         }
 
+        // Check Aerial State
+        CheckAerialState();
+
         // Apply Gravity
         m_Context.CharacterVelocity.y += m_Context.GravityForce * (Time.deltaTime);
 
@@ -38,16 +56,15 @@ public class CharacterAir : CharacterState
         m_Context.CharacterVelocity.y = Mathf.Clamp(m_Context.CharacterVelocity.y, m_Context.GravityForce, Mathf.Infinity);
     }
 
-    protected override void MidUpdate()
+    protected override void MidFixedUpdate()
     {
-        // Air Steering Speed
-        m_Context.CharacterVelocity.x += m_Context.PlayerMovementVector.x * (m_Context.AirSpeedX * Time.deltaTime);
-
+        // Moved from MidUpdate()
         m_Context.Rigidbody.MovePosition(m_Context.Rigidbody.position += (m_Context.CharacterVelocity * Time.deltaTime));
     }
 
-    protected override void PostUpdate()
+    protected override void PostFixedUpdate()
     {
+        //
     }
 
     private void CheckAerialState()

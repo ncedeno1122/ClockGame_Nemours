@@ -36,6 +36,23 @@ public class CharacterPendulumState : CharacterState
     {
     }
 
+    // + + + + | FixedUpdate Functions | + + + +  
+
+    protected override void PreFixedUpdate()
+    {
+        //
+    }
+
+    protected override void MidFixedUpdate()
+    {
+        //
+    }
+
+    protected override void PostFixedUpdate()
+    {
+        //
+    }
+
     // + + + + | InputActions | + + + + 
 
     public override void OnAbility(InputAction.CallbackContext ctx)

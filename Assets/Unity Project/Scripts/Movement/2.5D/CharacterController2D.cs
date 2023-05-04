@@ -66,6 +66,14 @@ public class CharacterController2D : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        if (m_CurrentState != null)
+        {
+            m_CurrentState.OnFixedUpdate();
+        }
+    }
+
     // + + + + | InputSystem Handlers | + + + + 
 
     public void OnMoveIA(InputAction.CallbackContext ctx)

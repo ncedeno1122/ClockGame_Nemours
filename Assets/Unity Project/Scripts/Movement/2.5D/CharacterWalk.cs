@@ -29,27 +29,11 @@ public class CharacterWalk : CharacterState
         //Debug.Log($"Exiting CharacterWalk");
     }
 
+    // + + + + | Update Functions | + + + +  
+
     protected override void PreUpdate()
     {
-        // Groundcheck
-        m_Context.GroundCheck();
-
-        if (!m_Context.IsGrounded)
-        {
-            m_Context.ChangeState(new CharacterAir(m_Context));
-        }
-
-        // Moving Platform?
-        Rigidbody platformRb = m_Context.LeftCastHit.rigidbody ?? m_Context.RightCastHit.rigidbody;
-        if (platformRb && platformRb.gameObject.layer == LayerMask.NameToLayer("Platforms"))
-        {
-            TogglePositionBlockScript tpbs = platformRb.GetComponent<TogglePositionBlockScript>();
-            if (tpbs && tpbs.IsMoving)
-            {
-                m_Context.Rigidbody.MovePosition(m_Context.Rigidbody.position + ((tpbs.OffOffset - tpbs.OnOffset) / tpbs.MoveTime) * Time.deltaTime);
-                m_Context.Rigidbody.velocity = Vector3.zero;
-            }
-        }
+        
     }
 
     protected override void MidUpdate()
@@ -66,15 +50,52 @@ public class CharacterWalk : CharacterState
             float decelerationWalkSpeed = Mathf.Lerp(m_Context.CharacterVelocity.x, 0f, WalkDecelTimerHelper / WALK_DECELERATION_TIME);
             m_Context.CharacterVelocity.x = decelerationWalkSpeed;
         }
-
-        // Finally, MovePosition
-        m_Context.Rigidbody.MovePosition(m_Context.Rigidbody.position + new Vector3((m_Context.CharacterVelocity.x * Time.deltaTime), 0f));
     }
 
     protected override void PostUpdate()
     {
         Mathf.Clamp(WalkAccelTimerHelper += Time.deltaTime, 0f, WALK_ACCELERATION_TIME);
         Mathf.Clamp(WalkDecelTimerHelper += Time.deltaTime, 0f, WALK_DECELERATION_TIME);
+    }
+
+    // + + + + | FixedUpdate Functions | + + + +  
+
+    protected override void PreFixedUpdate()
+    {
+        // Groundcheck
+        m_Context.GroundCheck();
+
+        if (!m_Context.IsGrounded)
+        {
+            m_Context.ChangeState(new CharacterAir(m_Context));
+        }
+
+        // Moving Platform?
+        Rigidbody platformRb = m_Context.LeftCastHit.rigidbody ?? m_Context.RightCastHit.rigidbody;
+        if (platformRb && platformRb.gameObject.layer == LayerMask.NameToLayer("Platforms"))
+        {
+            TogglePositionBlockScript tpbs = platformRb.GetComponent<TogglePositionBlockScript>();
+            if (tpbs && tpbs.IsMoving)
+            {
+                //Debug.Log("MOVING WITH PLATFORM!");
+                Vector3 platformStepOffset = (tpbs.ToggledOn) ? ((tpbs.OnOffset - tpbs.OffOffset) / tpbs.MoveTime)
+                                                              : ((tpbs.OffOffset - tpbs.OnOffset) / tpbs.MoveTime);
+
+                m_Context.Rigidbody.MovePosition(m_Context.Rigidbody.position + platformStepOffset * Time.deltaTime);
+                m_Context.Rigidbody.velocity = Vector3.zero;
+            }
+        }
+    }
+
+    protected override void MidFixedUpdate()
+    {
+        // Finally, MovePosition - Moved from end of MidUpdate()
+        m_Context.Rigidbody.MovePosition(m_Context.Rigidbody.position + new Vector3((m_Context.CharacterVelocity.x * Time.deltaTime), 0f));
+    }
+
+    protected override void PostFixedUpdate()
+    {
+        //
     }
 
     // + + + + | InputActions | + + + + 
@@ -135,25 +156,7 @@ public class CharacterWalk : CharacterState
 
     public override void OnTriggerStay(Collider other)
     {
-        //if (other.gameObject.layer == LayerMask.NameToLayer("Platforms"))
-        //{
-        //    //Debug.Log("Found a platform!");
-        //    // Moving Platform?
-        //    TogglePositionBlockScript tpbs = other.gameObject.GetComponent<TogglePositionBlockScript>();
-        //    if (tpbs != null)
-        //    {
-        //        // Try and bind to the platform as it moves...
-        //        Debug.Log("Setting velocity to zero...");
-        //        m_Context.Rigidbody.velocity = Vector3.zero;
-                
-        //        // If there's a horizontal component to the movement,
-        //        if (tpbs.OnOffset.x - tpbs.OffOffset.x != 0f)
-        //        {
-        //            //
-        //        }
-
-        //    }
-        //}
+        //
     }
 
     public override void OnTriggerExit(Collider other)

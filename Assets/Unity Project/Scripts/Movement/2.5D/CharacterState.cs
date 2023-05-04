@@ -27,6 +27,19 @@ public abstract class CharacterState
     protected abstract void MidUpdate();
     protected abstract void PostUpdate();
 
+    // FixedUpdate Functions
+
+    public void OnFixedUpdate()
+    {
+        PreFixedUpdate();
+        MidFixedUpdate();
+        PostFixedUpdate();
+    }
+
+    protected abstract void PreFixedUpdate();
+    protected abstract void MidFixedUpdate();
+    protected abstract void PostFixedUpdate();
+
     // Input Functions
     public abstract void OnMove(InputAction.CallbackContext ctx);
     public abstract void OnJump(InputAction.CallbackContext ctx);
