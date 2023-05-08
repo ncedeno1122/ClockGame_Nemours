@@ -15,6 +15,7 @@ public class AbilityManager : MonoBehaviour
     public Ability CurrentAbility { get; private set; }
     public PendulumAbility PendulumAbility { get; private set; }
     public HandsAbility HandsAbility { get; private set; }
+    public ChimeAbility ChimeAbility { get; private set; } 
 
     public List<Ability> TotalAbilities = new();
 
@@ -23,6 +24,7 @@ public class AbilityManager : MonoBehaviour
         // Get individual components
         PendulumAbility = GetComponent<PendulumAbility>();
         HandsAbility = GetComponent<HandsAbility>();
+        ChimeAbility = GetComponent<ChimeAbility>();
 
         // Find and Equip Abilities
         TotalAbilities.AddRange(GetComponents<Ability>());

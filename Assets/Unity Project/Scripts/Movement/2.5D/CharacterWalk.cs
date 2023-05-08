@@ -140,6 +140,9 @@ public class CharacterWalk : CharacterState
                     case HandsAbility:
                         m_Context.ChangeState(new CharacterHandsState(m_Context));
                         break;
+                    case ChimeAbility:
+                        m_Context.ChangeState(new CharacterChimeState(m_Context));
+                        break;
                 }
             }
         }

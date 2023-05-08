@@ -182,6 +182,9 @@ public class CharacterController2D : MonoBehaviour
                 case CharacterHandsState:
                     Gizmos.color = Color.red;
                     break;
+                case CharacterChimeState:
+                    Gizmos.color = new(1f, 0.5f, 0f, 1f); // Orange!
+                    break;
             }
 
             Gizmos.DrawSphere(transform.position + Vector3.up, 0.25f);

@@ -101,6 +101,9 @@ public class CharacterAir : CharacterState
                     case PendulumAbility:
                         m_Context.ChangeState(new CharacterPendulumState(m_Context));
                         break;
+                    case ChimeAbility:
+                        m_Context.ChangeState(new CharacterChimeState(m_Context));
+                        break;
                 }
             }
         }

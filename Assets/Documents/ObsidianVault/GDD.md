@@ -11,5 +11,6 @@ The clock's Pendulum ability allows you to "Tick" certain elements, or **slightl
 The clock's Hands ability allows the player to rotate certain objects throughout a level. The input for this is holding the Interact-button and inputting a left-right direction to adjust one way or the other. For example, a set of gears that can form a platform at a certain rotation stand before the player. The player can rotate them into proper rotation and then cross the obstacle by using the Hands ability. As well, perhaps a floating platform only moves via the Hands ability. You can jump on and hitch a ride with your fancy new Hands ability, with it taking you where you want to go.
 ## Chime
 The clock's Chime ability can stun enemies, allowing you to get the upper hand and jump on them. It can also shatter glass panels that may block the player's way.
+Chime works by SphereCasting and triggering any ChimeObserver scripts. 
 ## Cuckoo
 The last ability is Cuckoo; the primary way of damaging enemies and pressing buttons throughout the level. The player uses a small, violent, and hand-carved bird to launch in front of them for a moment - it is essentially a punch attack.
