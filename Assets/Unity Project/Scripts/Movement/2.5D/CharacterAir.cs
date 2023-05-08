@@ -94,7 +94,7 @@ public class CharacterAir : CharacterState
         if (ctx.performed)
         {
             Ability currAbility = m_Context.AbilityManager.CurrentAbility;
-            if (currAbility != null)
+            if (currAbility != null && currAbility.IsEnabled)
             {
                 switch (currAbility)
                 {
@@ -103,6 +103,9 @@ public class CharacterAir : CharacterState
                         break;
                     case ChimeAbility:
                         m_Context.ChangeState(new CharacterChimeState(m_Context));
+                        break;
+                    case CuckooAbility:
+                        m_Context.ChangeState(new CharacterCuckooState(m_Context));
                         break;
                 }
             }

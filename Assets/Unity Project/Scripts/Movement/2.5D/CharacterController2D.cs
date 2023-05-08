@@ -1,5 +1,7 @@
+using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,7 +19,19 @@ public class CharacterController2D : MonoBehaviour
     public bool IsGrounded;
     public bool IsJumping = false;
     public bool IsFalling = false;
-    public bool FacingRight = true;
+
+    private bool m_FacingRight = true;
+    public bool FacingRight { get => m_FacingRight;
+        set
+        {
+            if (m_FacingRight != value)
+            {
+                //Debug.Log($"Was facing {(m_FacingRight ? "right" : "left")}, now facing {(value ? "right" : "left")}");
+                SetFacingDirection(value);
+            }
+            m_FacingRight = value;
+        }
+    }
 
     [Range(0.01f, 1f)]
     public float GroundCheckDistance = 0.3f;
@@ -30,8 +44,11 @@ public class CharacterController2D : MonoBehaviour
     public GameObject LeftCastGO;
     public GameObject RightCastGO;
 
+    public Transform ModelTransform { get; private set; }
+
     private BoxCollider m_BoxCollider;
     public Rigidbody Rigidbody;
+    public Animator Animator;
 
     private CharacterState m_CurrentState;
     public CharacterState CurrentState { get => m_CurrentState; }
@@ -43,10 +60,13 @@ public class CharacterController2D : MonoBehaviour
 
     private void Awake()
     {
+        ModelTransform = transform.GetChild(0);
+
         m_BoxCollider = GetComponent<BoxCollider>();
         Rigidbody = GetComponent<Rigidbody>();
         m_PlayerInput = GetComponent<PlayerInput>();
         AbilityManager = GetComponent<AbilityManager>();
+        Animator = GetComponent<Animator>();
 
         m_MoveIA = m_PlayerInput.actions["Move"];
         m_JumpIA = m_PlayerInput.actions["Jump"];
@@ -110,6 +130,12 @@ public class CharacterController2D : MonoBehaviour
         m_CurrentState.OnEnter();
     }
 
+    // Wraps AdvanceState so that our Animation machine can use it.
+    public void AdvanceState()
+    {
+        m_CurrentState.AdvanceState();
+    }
+
     // Performs a double raycast from either end of the collider to determine if the player is grounded.
     // TODO: This function will need to be optimized.
     public void GroundCheck()
@@ -135,6 +161,22 @@ public class CharacterController2D : MonoBehaviour
                      (RightCastHit.collider && !RightCastHit.collider.isTrigger);
         LeftCastGO = (LeftCastHit.transform?.gameObject) ? LeftCastHit.transform.gameObject : null;
         RightCastGO = (RightCastHit.transform?.gameObject) ? RightCastHit.transform.gameObject : null;
+    }
+
+    public void SetFacingDirection(bool facingRight)
+    {
+        // Adjust ModelTransform Facing Direction
+        //ModelTransform.localScale.Scale((facingRight ? Vector3.right : Vector3.left));
+
+        ModelTransform.localScale = new Vector3(
+        (facingRight ? Mathf.Abs(ModelTransform.localScale.x) : Mathf.Abs(ModelTransform.localScale.x) * -1f),
+        ModelTransform.localScale.y,
+        ModelTransform.localScale.z);
+
+        //ModelTransform.localScale.Set(
+        //    ModelTransform.localScale.x * (facingRight ? 1f : -1f),
+        //    ModelTransform.localScale.y,
+        //    ModelTransform.localScale.z);
     }
 
     // + + + + | Collision Methods | + + + + 
@@ -184,6 +226,9 @@ public class CharacterController2D : MonoBehaviour
                     break;
                 case CharacterChimeState:
                     Gizmos.color = new(1f, 0.5f, 0f, 1f); // Orange!
+                    break;
+                case CharacterCuckooState:
+                    Gizmos.color = new(1f, 0f, 1f, 1f); // Purple!
                     break;
             }
 
