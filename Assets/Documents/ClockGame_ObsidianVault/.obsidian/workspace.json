@@ -13,25 +13,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "DevLogs/2023-05-08.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          }
-        ]
-      },
-      {
-        "id": "b626897246aa7145",
-        "type": "tabs",
-        "children": [
-          {
-            "id": "a4dda98a71c4ee66",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "GDD.md",
+                "file": "DevLogs/2023-05-10.md",
                 "mode": "source",
                 "source": false
               }
@@ -111,7 +93,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "DevLogs/2023-05-08.md",
+                "file": "DevLogs/2023-05-10.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -128,7 +110,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "DevLogs/2023-05-08.md",
+                "file": "DevLogs/2023-05-10.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -151,7 +133,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "DevLogs/2023-05-08.md"
+                "file": "DevLogs/2023-05-10.md"
               }
             }
           }
@@ -174,8 +156,10 @@
   },
   "active": "fce8ba784b1c60f3",
   "lastOpenFiles": [
-    "GDD.md",
+    "DevLogs/2023-05-10.md.meta",
     "DevLogs/2023-05-08.md",
+    "DevLogs/2023-05-10.md",
+    "GDD.md",
     "DevLogs/2023-05-08.md.meta",
     "DevLogs/2023-05-04.md",
     "DevLogs/2023-05-04.md.meta",

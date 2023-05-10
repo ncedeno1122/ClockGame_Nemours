@@ -11,12 +11,15 @@ public class AbilityManager : MonoBehaviour
 {
     [SerializeField]
     private int m_CurrAbilityIndex = 0;
+    public int CurrAbilityIndex { get => m_CurrAbilityIndex; private set => m_CurrAbilityIndex = value; } 
 
     public Ability CurrentAbility { get; private set; }
     public PendulumAbility PendulumAbility { get; private set; }
     public HandsAbility HandsAbility { get; private set; }
     public ChimeAbility ChimeAbility { get; private set; }
     public CuckooAbility CuckooAbility { get; private set; }
+
+    public AbilityClockUIController AbilityClockUIController;
 
     public List<Ability> TotalAbilities = new();
 
@@ -36,6 +39,26 @@ public class AbilityManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        AbilityClockUIController.RegisterAbilityManager(this);
+        AbilityClockUIController.UpdateUI();
+    }
+
+    private void OnValidate()
+    {
+        if (!AbilityClockUIController)
+        {
+            AbilityClockUIController = GameObject.Find("AbilityClockPanel").GetComponent<AbilityClockUIController>();
+            Start();
+        }
+
+        if (!(TotalAbilities.Count > 0))
+        {
+            Awake();
+        }
+    }
+
     // + + + + | Functions | + + + + 
 
     // TODO: Test these fools
@@ -46,6 +69,7 @@ public class AbilityManager : MonoBehaviour
         m_CurrAbilityIndex = (int) Mathf.Repeat(m_CurrAbilityIndex + 1, TotalAbilities.Count);
         CurrentAbility = TotalAbilities[m_CurrAbilityIndex];
         Debug.Log($"NextAbility! CurrentAbility is {CurrentAbility}");
+        AbilityClockUIController.UpdateUI();
     }
 
     public void PreviousAbility()
@@ -54,5 +78,6 @@ public class AbilityManager : MonoBehaviour
         m_CurrAbilityIndex = (int)Mathf.Repeat(m_CurrAbilityIndex - 1, TotalAbilities.Count);
         CurrentAbility = TotalAbilities[m_CurrAbilityIndex];
         Debug.Log($"PreviousAbility! CurrentAbility is {CurrentAbility}");
+        AbilityClockUIController.UpdateUI();
     }
 }
