@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class AbilityClockUIController : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class AbilityClockUIController : MonoBehaviour
     public GameObject AbilityIconPrefab;
     public TextMeshProUGUI DebugAbilityText;
 
-    private Dictionary<Ability, RectTransform> m_AbilityIconDictionary = new();
+    public RectTransform[] m_AbilityIconTFs;
 
     private void Awake()
     {
@@ -25,43 +26,25 @@ public class AbilityClockUIController : MonoBehaviour
         
     }
 
-    private void Update()
-    {
-        ClockHandTF.Rotate(0f, 0f, 1f * Time.deltaTime);
-    }
-
-    private void OnValidate()
-    {
-        if (m_AbilityIconDictionary.Count > 0)
-        {
-            m_AbilityIconDictionary.Clear();
-            foreach (RectTransform tf in AbilityIconsTF)
-            {
-                Destroy(tf);
-            }
-        }
-
-        if (!AbilityIconsTF)
-        {
-            Awake();
-        }
-    }
-
     // + + + + | Functions | + + + +
 
     public void RegisterAbilityManager(AbilityManager abilityManager)
     {
-        if (m_AbilityManager != null) return;
+        // Assign AbilityManager
         m_AbilityManager = abilityManager;
 
+        // Create Icon Array
+        m_AbilityIconTFs = new RectTransform[m_AbilityManager.TotalAbilities.Length];
+        //Debug.Log($"Created Ability icon array with length {m_AbilityIconTFs.Length} from OG length {m_AbilityManager.TotalAbilities.Length}");
+
         // Create Sprite for each
-        foreach (Ability ability in m_AbilityManager.TotalAbilities)
+        for (int i = 0; i < m_AbilityIconTFs.Length; i++)
         {
-            GameObject newIcon = Instantiate(AbilityIconPrefab, AbilityIconsTF);
-            newIcon.GetComponent<RectTransform>().SetParent(AbilityIconsTF, false);
-            newIcon.name = $"{ability.name}_Icon";
-            m_AbilityIconDictionary.Add(ability, newIcon.GetComponent<RectTransform>());
-            Debug.Log($"Added {ability} to Dictionary!");
+            GameObject newIconPrefab = Instantiate(AbilityIconPrefab, AbilityIconsTF);
+            newIconPrefab.name = m_AbilityManager.TotalAbilities[i].AbilityType + "_Icon";
+            // TODO: Add sprite from some ScriptableObject that stores icons
+            //Debug.Log($"Prefab {newIconPrefab.name} has RectTransform {newIconPrefab.GetComponent<RectTransform>()}");
+            m_AbilityIconTFs[i] = newIconPrefab.GetComponent<RectTransform>();
         }
 
         UpdateUI();
@@ -69,30 +52,42 @@ public class AbilityClockUIController : MonoBehaviour
 
     public void UpdateUI()
     {
+        // Reject if unbound
+        if (m_AbilityManager == null)
+        {
+            Debug.LogWarning("Cannot update AbilityClockUI, no AbilityManager is registered!");
+            return;
+        }
+
         // Show or Hide Enabled Sprites
-        //foreach (Ability ability in m_AbilityManager.TotalAbilities)
-        //{
-        //    // Set Active
-        //    m_AbilityIconDictionary.TryGetValue(ability, out RectTransform abilityIconTF);
-        //    if (abilityIconTF)
-        //    {
-        //        abilityIconTF.gameObject.SetActive(ability.IsEnabled);
-        //    }
-        //}
+        for (int i = 0; i < m_AbilityManager.TotalAbilities.Length; i++)
+        {
+            if (m_AbilityManager.TotalAbilities[i].IsEnabled)
+            {
+                m_AbilityIconTFs[i].gameObject.GetComponent<Image>().enabled = true;
+            }
+            else
+            {
+                m_AbilityIconTFs[i].gameObject.GetComponent<Image>().enabled = false;
+            }
+        }
 
         // Then, display them properly on the clock
-        //List<Ability> enabledAbilities = m_AbilityManager.TotalAbilities.FindAll(x => x.IsEnabled);
-        //for (int i = 0; i < enabledAbilities.Count; i++)
-        //{
-        //    Ability currAbility = enabledAbilities[i];
-        //    m_AbilityIconDictionary.TryGetValue(currAbility, out RectTransform abilityIconTF);
-        //    if (abilityIconTF)
-        //    {
-        //        abilityIconTF.position = new Vector3(
-        //            Mathf.Cos(((i / 360f) / 360f) * Mathf.Deg2Rad) * 50f,
-        //            Mathf.Sin(((i / 360f) / 360f) * Mathf.Deg2Rad) * 50f );
-        //    }
-        //}
+        int enabledAbilities = m_AbilityManager.EnabledAbilities.Count;
+        int enabledAbilityIndex = 0; // Used to set icon position relative to top of circle!
+        foreach (Ability ability in m_AbilityManager.EnabledAbilities)
+        {
+            int totalAbilityIndex = (int)ability.AbilityType - 1;
+            m_AbilityIconTFs[totalAbilityIndex].anchoredPosition = new Vector3(
+                    Mathf.Sin((enabledAbilityIndex * (360f / enabledAbilities)) * Mathf.Deg2Rad) * 50f,
+                    Mathf.Cos((enabledAbilityIndex * (360f / enabledAbilities)) * Mathf.Deg2Rad) * 50f); // Sin for X, then Cos for Y to have icons align to the top!
+            enabledAbilityIndex++;
+        }
+
+        // Then, move the hand to the current ability.
+        int currAbilityIndex = m_AbilityManager.CurrAbilityIndex; // Use enum for this! But the enum MUST be in proper order!!!
+        float clockHandAngle = (currAbilityIndex * (360f / enabledAbilities));
+        ClockHandTF.rotation = Quaternion.Euler(Vector3.forward * clockHandAngle);
 
         DebugAbilityText.text = m_AbilityManager.CurrentAbility.GetType().ToString();
     }

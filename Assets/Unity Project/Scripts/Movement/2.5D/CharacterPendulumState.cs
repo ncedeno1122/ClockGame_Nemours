@@ -9,7 +9,7 @@ public class CharacterPendulumState : CharacterState
 
     public CharacterPendulumState(CharacterController2D context) : base(context)
     {
-        m_PendulumAbility = context.AbilityManager.PendulumAbility;
+        m_PendulumAbility = context.AbilityManager.PendulumScript;
     }
 
     public override void OnEnter()

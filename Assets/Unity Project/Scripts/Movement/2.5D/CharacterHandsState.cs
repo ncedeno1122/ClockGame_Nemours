@@ -11,7 +11,7 @@ public class CharacterHandsState : CharacterState
 
     public CharacterHandsState(CharacterController2D context) : base(context)
     {
-        m_HandsAbility = context.AbilityManager.HandsAbility;
+        m_HandsAbility = context.AbilityManager.HandsScript;
         m_StoredGroundCheckDistance = m_Context.GroundCheckDistance;
     }
 

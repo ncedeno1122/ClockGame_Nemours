@@ -9,7 +9,7 @@ public class CharacterChimeState : CharacterState
 
     public CharacterChimeState(CharacterController2D context) : base(context)
     {
-        m_ChimeAbility = context.AbilityManager.ChimeAbility;
+        m_ChimeAbility = context.AbilityManager.ChimeScript;
     }
 
     public override void OnEnter()

@@ -9,7 +9,7 @@ public class CharacterCuckooState : CharacterState
 
     public CharacterCuckooState(CharacterController2D context) : base(context)
     {
-        m_CuckooAbility = context.AbilityManager.CuckooAbility;
+        m_CuckooAbility = context.AbilityManager.CuckooScript;
     }
 
     public override void OnEnter()
