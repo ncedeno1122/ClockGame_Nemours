@@ -82,18 +82,14 @@ public class AbilityClockUIController : MonoBehaviour
         }
 
         // Show or Hide Enabled Sprites
-        for (int i = 0; i < m_AbilityManager.TotalAbilities.Length; i++)
-        {
-            if (m_AbilityManager.TotalAbilities[i].IsEnabled)
-            {
-                m_AbilityIconTFs[i].gameObject.GetComponent<Image>().enabled = true;
-            }
-            else
-            {
-                m_AbilityIconTFs[i].gameObject.GetComponent<Image>().enabled = false;
-            }
-        }
+        UpdateEnabledSprites();
+        RepositionClockFaceSprites();
 
+        //DebugAbilityText.text = m_AbilityManager.CurrentAbility.GetType().ToString();
+    }
+
+    private void RepositionClockFaceSprites()
+    {
         // Then, display them properly on the clock
         int enabledAbilities = m_AbilityManager.EnabledAbilities.Count;
         int enabledAbilityIndex = 0; // Used to set icon position relative to top of circle!
@@ -110,7 +106,21 @@ public class AbilityClockUIController : MonoBehaviour
         int currAbilityIndex = m_AbilityManager.CurrAbilityIndex; // Use enum for this! But the enum MUST be in proper order!!!
         float clockHandAngle = (currAbilityIndex * (360f / enabledAbilities)) * -1f;
         ClockHandTF.rotation = Quaternion.Euler(Vector3.forward * clockHandAngle);
-
-        //DebugAbilityText.text = m_AbilityManager.CurrentAbility.GetType().ToString();
     }
+
+    private void UpdateEnabledSprites()
+    {
+        for (int i = 0; i < m_AbilityManager.TotalAbilities.Length; i++)
+        {
+            if (m_AbilityManager.TotalAbilities[i].IsEnabled)
+            {
+                m_AbilityIconTFs[i].gameObject.GetComponent<Image>().enabled = true;
+            }
+            else
+            {
+                m_AbilityIconTFs[i].gameObject.GetComponent<Image>().enabled = false;
+            }
+        }
+    }
+
 }
