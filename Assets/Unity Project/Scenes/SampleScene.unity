@@ -660,7 +660,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &575260029
 RectTransform:
   m_ObjectHideFlags: 0
@@ -926,6 +926,7 @@ MonoBehaviour:
   ClockHandTF: {fileID: 380248057}
   AbilityIconPrefab: {fileID: 1662737075743270684, guid: 8cb0a99d4977f794598785816f5a1cb4, type: 3}
   DebugAbilityText: {fileID: 575260030}
+  IconBank: {fileID: 11400000, guid: dd93f1bb5b22982438c6f15312ee6c5b, type: 2}
   m_AbilityIconTFs: []
 --- !u!1 &784559174
 GameObject:

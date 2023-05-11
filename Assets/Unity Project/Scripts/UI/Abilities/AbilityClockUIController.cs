@@ -13,6 +13,8 @@ public class AbilityClockUIController : MonoBehaviour
     public GameObject AbilityIconPrefab;
     public TextMeshProUGUI DebugAbilityText;
 
+    public IconBankSO IconBank;
+
     public RectTransform[] m_AbilityIconTFs;
 
     private void Awake()
@@ -43,6 +45,26 @@ public class AbilityClockUIController : MonoBehaviour
             GameObject newIconPrefab = Instantiate(AbilityIconPrefab, AbilityIconsTF);
             newIconPrefab.name = m_AbilityManager.TotalAbilities[i].AbilityType + "_Icon";
             // TODO: Add sprite from some ScriptableObject that stores icons
+            Sprite iconSprite;
+            switch (m_AbilityManager.TotalAbilities[i].AbilityType)
+            {
+                case AbilityType.PENDULUM:
+                    iconSprite = IconBank.PendulumIcon;
+                    break;
+                case AbilityType.HANDS:
+                    iconSprite = IconBank.HandsIcon;
+                    break;
+                case AbilityType.CHIME:
+                    iconSprite = IconBank.ChimeIcon;
+                    break;
+                case AbilityType.CUCKOO:
+                    iconSprite = IconBank.CuckooIcon;
+                    break;
+                default:
+                    iconSprite = IconBank.InvalidIcon;
+                    break;
+            }
+            newIconPrefab.GetComponent<Image>().sprite = iconSprite;
             //Debug.Log($"Prefab {newIconPrefab.name} has RectTransform {newIconPrefab.GetComponent<RectTransform>()}");
             m_AbilityIconTFs[i] = newIconPrefab.GetComponent<RectTransform>();
         }
@@ -86,9 +108,9 @@ public class AbilityClockUIController : MonoBehaviour
 
         // Then, move the hand to the current ability.
         int currAbilityIndex = m_AbilityManager.CurrAbilityIndex; // Use enum for this! But the enum MUST be in proper order!!!
-        float clockHandAngle = (currAbilityIndex * (360f / enabledAbilities));
+        float clockHandAngle = (currAbilityIndex * (360f / enabledAbilities)) * -1f;
         ClockHandTF.rotation = Quaternion.Euler(Vector3.forward * clockHandAngle);
 
-        DebugAbilityText.text = m_AbilityManager.CurrentAbility.GetType().ToString();
+        //DebugAbilityText.text = m_AbilityManager.CurrentAbility.GetType().ToString();
     }
 }
