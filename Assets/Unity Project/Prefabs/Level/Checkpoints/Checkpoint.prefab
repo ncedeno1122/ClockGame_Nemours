@@ -55,7 +55,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1056476211830430845}
   - component: {fileID: 476570747581827550}
-  - component: {fileID: 4108978542697630198}
+  - component: {fileID: 6014795831312012281}
   m_Layer: 0
   m_Name: Trigger
   m_TagString: Untagged
@@ -91,7 +91,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 5, y: 5, z: 1.5}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4108978542697630198
+--- !u!114 &6014795831312012281
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,7 +100,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 4326649115237316924}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1627dd3b00b2d194da49b3362517a2d0, type: 3}
+  m_Script: {fileID: 11500000, guid: 0dd8aee2d890a4b478fd2b64defe8a6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetCheckpoint: {fileID: 2575447366616896299}
+  OnPlayerTriggerEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2575447366616896299}
+        m_TargetAssemblyTypeName: Checkpoint, Assembly-CSharp
+        m_MethodName: Activate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

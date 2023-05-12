@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class LevelManager : GenericSingleton<LevelManager>
 {
+    public CharacterController2D Player;
     public List<Checkpoint> Checkpoints = new(); // Assigned in Inspector
     public Checkpoint LastReachedCheckpoint;
     public Bounds LevelBounds;
@@ -12,16 +13,14 @@ public class LevelManager : GenericSingleton<LevelManager>
 
     private void OnValidate()
     {
+        // Find Player if none
+        if (Player == null)
+        {
+            Player = FindObjectOfType<CharacterController2D>();
+        }
+
         // Remove 'Missing' Checkpoints
         Checkpoints.RemoveAll(x => x == null);
-
-        foreach (Checkpoint cp in Checkpoints)
-        {
-            if (cp == null)
-            {
-                Debug.Log($"FOUND NULL CHECKPOINT {cp}!!!");
-            }
-        }
     }
 
     private void Start()

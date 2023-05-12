@@ -29,18 +29,20 @@ public class AbilityPickup : MonoBehaviour
         m_SR.sprite = LevelManager.Instance.IconBank.GetIconFromAbilityEnumValue((int)AbilityToGive);
     }
 
-    private void OnTriggerEnter(Collider other)
+    // + + + + | Functions | + + + +
+
+    /// <summary>
+    /// Retrieves the Player's AbilityManager and gives them this AbilityType.
+    /// </summary>
+    public void OnPickup()
     {
-        if (other.CompareTag("Player"))
+        AbilityManager am = LevelManager.Instance.Player.gameObject.GetComponent<AbilityManager>();
+        if (am && !am.EnabledAbilities.Exists(x => x.AbilityType == AbilityToGive))
         {
-            AbilityManager am = other.GetComponent<AbilityManager>();
-            if (am && !am.EnabledAbilities.Exists(x=>x.AbilityType == AbilityToGive))
-            {
-                // Give to the Player!
-                Debug.Log($"Found Player, giving them {AbilityToGive}!");
-                am.EnableAbility(am.TotalAbilities[(int)AbilityToGive - 1]);
-                gameObject.SetActive(false);
-            }
+            // Give to the Player!
+            //Debug.Log($"Found Player, giving them {AbilityToGive}!");
+            am.EnableAbility(am.TotalAbilities[(int)AbilityToGive - 1]);
+            gameObject.SetActive(false);
         }
     }
 }
