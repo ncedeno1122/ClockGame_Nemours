@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GenericSingleton<T> : MonoBehaviour where T : Component
 {
-    private static T m_Instance;
+    protected static T m_Instance;
     public static T Instance
     {
         get
@@ -29,7 +29,7 @@ public class GenericSingleton<T> : MonoBehaviour where T : Component
         }
     }
 
-    private void Awake()
+    protected void Awake()
     {
         if (m_Instance == null)
         {

@@ -8,11 +8,30 @@ public class LevelManager : GenericSingleton<LevelManager>
     public List<Checkpoint> Checkpoints = new(); // Assigned in Inspector
     public Checkpoint LastReachedCheckpoint;
     public Bounds LevelBounds;
+    public IconBankSO IconBank;
 
     private void OnValidate()
     {
         // Remove 'Missing' Checkpoints
         Checkpoints.RemoveAll(x => x == null);
+
+        foreach (Checkpoint cp in Checkpoints)
+        {
+            if (cp == null)
+            {
+                Debug.Log($"FOUND NULL CHECKPOINT {cp}!!!");
+            }
+        }
+    }
+
+    private void Start()
+    {
+        // Try and get all Checkpoints!
+        if (Checkpoints.Count > 0)
+        {
+            Checkpoints.Clear();
+        }
+        Checkpoints.AddRange(FindObjectsOfType<Checkpoint>());
     }
 
     private void OnDrawGizmos()
@@ -27,6 +46,12 @@ public class LevelManager : GenericSingleton<LevelManager>
 
     public void OnCheckpointReached(Checkpoint point)
     {
+        // If the checkpoint
+        if (!Checkpoints.Contains(point))
+        {
+            Checkpoints.Add(point);
+        }
+
         // Activate the checkpoint
         if (!point.IsActivated)
         {

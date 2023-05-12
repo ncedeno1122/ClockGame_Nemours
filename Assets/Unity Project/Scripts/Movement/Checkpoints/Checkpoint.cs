@@ -11,8 +11,21 @@ public class Checkpoint : MonoBehaviour
 
     private void OnValidate()
     {
-        // Are we properly named and NOT a prefab?
-        if (!gameObject.name.Equals(GetFormattedName()) && gameObject.scene.name != null)
+        TryAddToCheckpointList();
+    }
+
+    private void Start()
+    {
+        TryAddToCheckpointList();
+    }
+
+    // + + + + | Functions | + + + +
+
+    // Attempts to add this Checkpoint and reformat it for placement in the LevelManager's checkpoint list.
+    private bool TryAddToCheckpointList()
+    {
+        // Are we in the scene and NOT a prefab?
+        if (gameObject.scene.name != null)
         {
             // Add these to the LevelManager's list of checkpoints
             if (LevelManager.Instance != null)
@@ -22,13 +35,17 @@ public class Checkpoint : MonoBehaviour
                     // Add this checkpoint
                     LevelManager.Instance.Checkpoints.Add(this);
                     CheckpointNumber = LevelManager.Instance.Checkpoints.IndexOf(this);
-                    gameObject.name = GetFormattedName();
+                    if (!gameObject.name.Equals(GetFormattedName()))
+                    {
+                        gameObject.name = GetFormattedName();
+                    }
+                    return true;
                 }
             }
         }
-    }
 
-    // + + + + | Functions | + + + +
+        return false;
+    }
 
     public void Activate()
     {
