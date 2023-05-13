@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: TESTLevelClock
   m_EditorClassIdentifier: 
   OfficialName: TESTClock
-  Description: 
-  FinalClockPrefab: {fileID: 0}
-  ClockPieces: []
+  Description: A clock that I made to debug things.
+  FinalClockPrefab: {fileID: 2820004779222383764, guid: ae6ee2f63db1b064ebef7dd55c693d0b, type: 3}
+  ClockPieces:
+  - {fileID: 8003112178348064348, guid: dd3db65e646c66f4a8d4b52cebdc594f, type: 3}
+  - {fileID: 2437969623360176701, guid: 9237b7847c5b1b24fbd5572038c02cdb, type: 3}
+  - {fileID: 6187930319201679616, guid: 390f6b397e0f2ed468752ddb8482ba58, type: 3}
