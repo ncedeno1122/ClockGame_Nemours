@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ExitGateController : MonoBehaviour
 {
+    private bool m_IsExiting = false;
+
     private LevelManager m_LevelManager;
 
     private void Start()
@@ -22,10 +24,14 @@ public class ExitGateController : MonoBehaviour
     /// <returns></returns>
     public bool TryExit()
     {
+        if (m_IsExiting) return false;
         if (!CanPlayerExit()) return false;
 
         // If the Player CAN exit,
+        m_LevelManager.HandleLevelEnd();
+        m_IsExiting = true;
         Debug.Log("Player can exit!");
+
         return true;
     }
 

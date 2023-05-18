@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class LevelManager : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class LevelManager : MonoBehaviour
     
     public Bounds LevelBounds;
     public IconBankSO IconBank;
+
+    public UnityEvent OnLevelEnded;
 
     private void OnValidate()
     {
@@ -114,6 +117,14 @@ public class LevelManager : MonoBehaviour
 
         // Then, hide it.
         clockPiece.HideClockPiece();
+    }
+
+    /// <summary>
+    /// Invoked when the ExitGate is reached, starts the Level End Sequence.
+    /// </summary>
+    public void HandleLevelEnd()
+    {
+        OnLevelEnded?.Invoke();
     }
 
     private void OnDrawGizmos()
