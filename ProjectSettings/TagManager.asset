@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Cuckoo
+  - ExitGate
   layers:
   - Default
   - TransparentFX

@@ -4,23 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "2ce057f584409c69",
+        "id": "30b0ebe97749dbbf",
         "type": "tabs",
         "children": [
           {
-            "id": "fce8ba784b1c60f3",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "DevLogs/2023-05-11.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "421cbdc44521de91",
+            "id": "8d87a600d4f6a669",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -30,21 +18,38 @@
                 "source": false
               }
             }
-          }
-        ],
-        "currentTab": 1
-      },
-      {
-        "id": "d3dd6c059ce7e093",
-        "type": "tabs",
-        "children": [
+          },
           {
-            "id": "ca518716b4fa3f77",
+            "id": "163d5f5a5edfe59f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "DevLogs/2023-05-16.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "bfb1d4800d8a9e02",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
                 "file": "DevLogs/2023-05-13.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          },
+          {
+            "id": "bca3a97ccfd7d048",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "DevLogs/2023-05-12.md",
                 "mode": "source",
                 "source": false
               }
@@ -185,21 +190,21 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "421cbdc44521de91",
+  "active": "8d87a600d4f6a669",
   "lastOpenFiles": [
-    "DevLogs/2023-05-17.md.meta",
+    "DevLogs/2023-05-12.md",
+    "DevLogs/2023-05-13.md",
     "DevLogs/2023-05-16.md",
     "DevLogs/2023-05-17.md",
-    "DevLogs/2023-05-13.md",
+    "DevLogs/2023-05-11.md",
+    "DevLogs/2023-05-17.md.meta",
     "DevLogs/2023-05-16.md.meta",
     "DevLogs/2023-05-13.md.meta",
-    "DevLogs/2023-05-12.md",
     "DevLogs/2023-05-02.md",
     "DevLogs/2023-05-03.md",
     "DevLogs/2023-05-04.md",
     "DevLogs/2023-05-08.md",
     "DevLogs/2023-05-10.md",
-    "DevLogs/2023-05-11.md",
     "GDD.md",
     "DevLogs/2023-05-12.md.meta",
     "DevLogs/2023-05-11.md.meta",
@@ -208,7 +213,6 @@
     "DevLogs/2023-05-04.md.meta",
     "DevLogs/2023-05-03.md.meta",
     "DevLogs.meta",
-    "DevLogs/2023-05-02.md.meta",
     "Untitled.md"
   ]
 }

@@ -165,7 +165,20 @@ public class CharacterWalk : CharacterState
 
     public override void OnTriggerStay(Collider other)
     {
-        //
+        // ExitGate
+        if (other.CompareTag("ExitGate"))
+        {
+            // Are we trying to move "upwards?"
+            if (Mathf.Approximately(m_Context.PlayerMovementVector.x, 0f) &&
+                Mathf.Approximately(m_Context.PlayerMovementVector.y, 1f))
+            {
+                ExitGateController exitGate = other.GetComponent<ExitGateController>();
+                if (exitGate)
+                {
+                    exitGate.TryExit();
+                }
+            }
+        }
     }
 
     public override void OnTriggerExit(Collider other)
