@@ -83,12 +83,6 @@ public class LevelManager : MonoBehaviour
         {
             Checkpoints.Add(point);
         }
-
-        // Activate the checkpoint!
-        if (!point.IsActivated)
-        {
-            point.Activate();
-        }
         
         // No matter what, set last known checkpoint to this one.
         LastReachedCheckpoint = point;

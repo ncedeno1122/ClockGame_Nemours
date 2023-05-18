@@ -108,7 +108,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2575447366616896299}
         m_TargetAssemblyTypeName: Checkpoint, Assembly-CSharp
-        m_MethodName: Activate
+        m_MethodName: OnReached
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -18,6 +18,8 @@ public class Checkpoint : MonoBehaviour
 
     public void OnReached()
     {
+        if (!IsActivated) IsActivated = true;
+
         GameManager.Instance.CurrentLevelManager.OnCheckpointReached(this);
     }
 
