@@ -5,20 +5,24 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-public class AbilityClockUIController : MonoBehaviour
+public class AbilityClockUIController : MonoBehaviour, IActivatableUI
 {
+    private bool m_IsActivated;
+    public bool IsActivated { get => m_IsActivated; set => m_IsActivated = value; }
+
+    private CanvasGroup m_CanvasGroup;
     public AbilityManager m_AbilityManager;
     public RectTransform AbilityIconsTF;
+    public RectTransform[] m_AbilityIconTFs;
     public RectTransform ClockHandTF;
     public GameObject AbilityIconPrefab;
     public TextMeshProUGUI DebugAbilityText;
-
     public IconBankSO IconBank;
 
-    public RectTransform[] m_AbilityIconTFs;
 
     private void Awake()
     {
+        m_CanvasGroup = GetComponent<CanvasGroup>();
         AbilityIconsTF = transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
         ClockHandTF = transform.GetChild(0).GetChild(1).GetComponent<RectTransform>();
     }
@@ -26,6 +30,23 @@ public class AbilityClockUIController : MonoBehaviour
     private void Start()
     {
         
+    }
+
+    private void OnEnable()
+    {
+        // Subscribe to events
+        GameManager.Instance.CurrentLevelManager.OnLevelStarted.AddListener(OnActivate);
+        GameManager.Instance.CurrentLevelManager.OnLevelEnded.AddListener(OnDeactivate);
+    }
+
+    private void OnDisable()
+    {
+        // Unsubscribe from events
+        if (GameManager.Exists)
+        {
+            GameManager.Instance.CurrentLevelManager.OnLevelStarted.RemoveListener(OnActivate);
+            GameManager.Instance.CurrentLevelManager.OnLevelEnded.RemoveListener(OnDeactivate);
+        }
     }
 
     // + + + + | Functions | + + + +
@@ -74,6 +95,9 @@ public class AbilityClockUIController : MonoBehaviour
 
     public void UpdateUI()
     {
+        // Reject if inactive
+        if (!m_IsActivated) return;
+
         // Reject if unbound
         if (m_AbilityManager == null)
         {
@@ -123,4 +147,15 @@ public class AbilityClockUIController : MonoBehaviour
         }
     }
 
+    public void OnActivate()
+    {
+        m_IsActivated = true;
+        m_CanvasGroup.alpha = 1;
+    }
+
+    public void OnDeactivate()
+    {
+        m_IsActivated = false;
+        m_CanvasGroup.alpha = 0f;
+    }
 }

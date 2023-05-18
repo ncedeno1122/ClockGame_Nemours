@@ -13,43 +13,25 @@
             "state": {
               "type": "markdown",
               "state": {
+                "file": "DevLogs/2023-05-18.md",
+                "mode": "source",
+                "source": false
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "c81a52c8bdff03b1",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "115554571947c26b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
                 "file": "DevLogs/2023-05-17.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "163d5f5a5edfe59f",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "DevLogs/2023-05-16.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "bfb1d4800d8a9e02",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "DevLogs/2023-05-13.md",
-                "mode": "source",
-                "source": false
-              }
-            }
-          },
-          {
-            "id": "bca3a97ccfd7d048",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "DevLogs/2023-05-12.md",
                 "mode": "source",
                 "source": false
               }
@@ -129,7 +111,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "DevLogs/2023-05-17.md",
+                "file": "DevLogs/2023-05-18.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -146,7 +128,7 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "DevLogs/2023-05-17.md",
+                "file": "DevLogs/2023-05-18.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               }
@@ -169,7 +151,7 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "DevLogs/2023-05-17.md"
+                "file": "DevLogs/2023-05-18.md"
               }
             }
           }
@@ -192,11 +174,13 @@
   },
   "active": "8d87a600d4f6a669",
   "lastOpenFiles": [
+    "DevLogs/2023-05-18.md.meta",
+    "DevLogs/2023-05-17.md",
+    "DevLogs/2023-05-18.md",
     "DevLogs/2023-05-11.md",
     "DevLogs/2023-05-12.md",
     "DevLogs/2023-05-13.md",
     "DevLogs/2023-05-16.md",
-    "DevLogs/2023-05-17.md",
     "DevLogs/2023-05-17.md.meta",
     "DevLogs/2023-05-16.md.meta",
     "DevLogs/2023-05-13.md.meta",

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class GenericSingleton<T> : MonoBehaviour where T : MonoBehaviour
 {
+    public static bool Exists { get => m_Instance != null; }
+
     protected static T m_Instance;
     public static T Instance
     {

@@ -2,10 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PendulumUIController : MonoBehaviour
+public class PendulumUIController : MonoBehaviour, IActivatableUI
 {
     private bool StartsFromRight = true;
-    public bool IsAnimating { get; private set; }   
+    public bool IsAnimating { get; private set; }
+    
+    private bool m_IsActivated;
+    public bool IsActivated { get => m_IsActivated; set => m_IsActivated = value; }
+
     public float SwingAngleOffset = 45f;
     public float VisibleAlpha = 0.85f;
 
@@ -35,6 +39,9 @@ public class PendulumUIController : MonoBehaviour
 
     public void ToggleSwing(float animationTime)
     {
+        // Reject if inactive
+        if (!m_IsActivated) return;
+
         // Clear / Stop CRT if already running...
         if (m_PendulumAnimationCRT != null)
         {
@@ -77,5 +84,17 @@ public class PendulumUIController : MonoBehaviour
         IsAnimating = false;
         m_CanvasGroup.alpha = 0f;
         StopCoroutine(m_PendulumAnimationCRT);
+    }
+
+    public void OnActivate()
+    {
+        m_IsActivated = true;
+        m_CanvasGroup.alpha = 1f;
+    }
+
+    public void OnDeactivate()
+    {
+        m_IsActivated = false;
+        m_CanvasGroup.alpha = 0f;
     }
 }

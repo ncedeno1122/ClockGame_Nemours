@@ -201,6 +201,7 @@ GameObject:
   - component: {fileID: 6298775359806314989}
   - component: {fileID: 6298775359806314991}
   - component: {fileID: 6298775359806314984}
+  - component: {fileID: 1020696054873594073}
   m_Layer: 5
   m_Name: AbilityClockPanel
   m_TagString: Untagged
@@ -252,11 +253,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AbilityManager: {fileID: 0}
   AbilityIconsTF: {fileID: 6298775359304725698}
+  m_AbilityIconTFs: []
   ClockHandTF: {fileID: 6298775360824582877}
   AbilityIconPrefab: {fileID: 1662737075743270684, guid: 8cb0a99d4977f794598785816f5a1cb4, type: 3}
   DebugAbilityText: {fileID: 6298775359937411162}
   IconBank: {fileID: 11400000, guid: dd93f1bb5b22982438c6f15312ee6c5b, type: 2}
-  m_AbilityIconTFs: []
+--- !u!225 &1020696054873594073
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6298775359806314988}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &6298775359937411160
 GameObject:
   m_ObjectHideFlags: 0

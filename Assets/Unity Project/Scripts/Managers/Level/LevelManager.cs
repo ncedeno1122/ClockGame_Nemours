@@ -19,7 +19,7 @@ public class LevelManager : MonoBehaviour
     public Bounds LevelBounds;
     public IconBankSO IconBank;
 
-    public UnityEvent OnLevelEnded;
+    public UnityEvent OnLevelStarted, OnLevelEnded;
 
     private void OnValidate()
     {
@@ -57,7 +57,21 @@ public class LevelManager : MonoBehaviour
         {
             TryAddClockPiece(piece); // TODO: Want to delete invalid Clockpieces but not while iterating...
         }
-        
+
+        // Call LevelStartedEvent
+        OnLevelStarted?.Invoke();
+    }
+
+    private void OnEnable()
+    {
+        //
+    }
+
+    private void OnDisable()
+    {
+        // Remove listeners from events
+        OnLevelStarted.RemoveAllListeners();
+        OnLevelEnded.RemoveAllListeners();
     }
 
     // + + + + | Functions | + + + + 
