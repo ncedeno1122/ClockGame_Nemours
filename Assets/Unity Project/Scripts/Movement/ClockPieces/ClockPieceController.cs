@@ -9,30 +9,6 @@ public class ClockPieceController : MonoBehaviour
 {
     public GameObject ClockPieceGO { get; private set; }
 
-    private void OnValidate()
-    {
-        // Don't call if we're a prefab OR if the LevelManager knows of us.
-        if (gameObject.scene.name == null) return;
-        if (LevelManager.Instance.ClockPieces.Contains(this)) return;
-
-        // Try to add to LevelManager, delete if not.
-        if (LevelManager.Instance.TryAddClockPiece(this))
-        {
-
-        }
-        else
-        {
-            Debug.LogWarning($"Cannot allow new ClockPieceController; {LevelManager.Instance.ClockPieces.Count} out of {LevelManager.Instance.LevelClock.ClockPieces.Length} pieces are used.");
-            DestroyImmediate(gameObject);
-        }
-
-        // If not already, try set the ClockPieceGO's position correctly.
-        if (ClockPieceGO != null)
-        {
-            ClockPieceGO.transform.localPosition = Vector3.zero;
-        }
-    }
-
     private void Awake()
     {
         //
@@ -60,7 +36,7 @@ public class ClockPieceController : MonoBehaviour
     /// </summary>
     public void OnPieceFound()
     {
-        LevelManager.Instance.OnClockPieceFound(this);
+        GameManager.Instance.CurrentLevelManager.OnClockPieceFound(this);
     }
 
     /// <summary>

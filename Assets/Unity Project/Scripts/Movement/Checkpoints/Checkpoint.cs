@@ -9,43 +9,7 @@ public class Checkpoint : MonoBehaviour
     public int CheckpointNumber { get; private set; }
     public bool IsActivated { get; private set; }
 
-    private void OnValidate()
-    {
-        TryAddToCheckpointList();
-    }
-
-    private void Start()
-    {
-        TryAddToCheckpointList();
-    }
-
     // + + + + | Functions | + + + +
-
-    // Attempts to add this Checkpoint and reformat it for placement in the LevelManager's checkpoint list.
-    private bool TryAddToCheckpointList()
-    {
-        // Are we in the scene and NOT a prefab?
-        if (gameObject.scene.name != null)
-        {
-            // Add these to the LevelManager's list of checkpoints
-            if (LevelManager.Instance != null)
-            {
-                if (!LevelManager.Instance.Checkpoints.Contains(this))
-                {
-                    // Add this checkpoint
-                    LevelManager.Instance.Checkpoints.Add(this);
-                    CheckpointNumber = LevelManager.Instance.Checkpoints.IndexOf(this);
-                    if (!gameObject.name.Equals(GetFormattedName()))
-                    {
-                        gameObject.name = GetFormattedName();
-                    }
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
 
     public void Activate()
     {
@@ -54,7 +18,7 @@ public class Checkpoint : MonoBehaviour
 
     public void OnReached()
     {
-        LevelManager.Instance.OnCheckpointReached(this);
+        GameManager.Instance.CurrentLevelManager.OnCheckpointReached(this);
     }
 
     private string GetFormattedName() => GetType().Name + "_" + CheckpointNumber;

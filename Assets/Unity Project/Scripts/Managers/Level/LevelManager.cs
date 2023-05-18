@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class LevelManager : GenericSingleton<LevelManager>
+public class LevelManager : MonoBehaviour
 {
     public CharacterController2D Player;
 
@@ -25,8 +26,13 @@ public class LevelManager : GenericSingleton<LevelManager>
             Player = FindObjectOfType<CharacterController2D>();
         }
 
-        // Remove 'Missing' Checkpoints
-        Checkpoints.RemoveAll(x => x == null);
+        // Remove 'Missing' Checkpoints & ClockPieces
+        Start();
+    }
+
+    private void Awake()
+    {
+
     }
 
     private void Start()
@@ -37,14 +43,18 @@ public class LevelManager : GenericSingleton<LevelManager>
             Checkpoints.Clear();
         }
         Checkpoints.AddRange(FindObjectsOfType<Checkpoint>());
-    }
 
-    private void OnDrawGizmos()
-    {
-        // Draw LevelBounds
-        Gizmos.color = Color.green;
-        //Gizmos.DrawCube(LevelBounds.center, LevelBounds.size);
-        Gizmos.DrawWireCube(LevelBounds.center, LevelBounds.size);
+        // Try and get and format all ClockPieces as well!
+        if (ClockPieces.Count > 0)
+        {
+            ClockPieces.Clear();
+        }
+        ClockPieces.AddRange(FindObjectsOfType<ClockPieceController>());
+        foreach (var piece in ClockPieces)
+        {
+            TryAddClockPiece(piece); // TODO: Want to delete invalid Clockpieces but not while iterating...
+        }
+        
     }
 
     // + + + + | Functions | + + + + 
@@ -106,4 +116,11 @@ public class LevelManager : GenericSingleton<LevelManager>
         clockPiece.HideClockPiece();
     }
 
+    private void OnDrawGizmos()
+    {
+        // Draw LevelBounds
+        Gizmos.color = Color.green;
+        //Gizmos.DrawCube(LevelBounds.center, LevelBounds.size);
+        Gizmos.DrawWireCube(LevelBounds.center, LevelBounds.size);
+    }
 }

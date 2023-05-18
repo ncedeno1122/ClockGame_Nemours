@@ -7,17 +7,6 @@ public class AbilityPickup : MonoBehaviour
     public AbilityType AbilityToGive;
     private SpriteRenderer m_SR;
 
-    private void OnValidate()
-    {
-        // Try set proper Icons!
-        SpriteRenderer sr = (m_SR != null) ? m_SR : GetComponent<SpriteRenderer>();
-        m_SR = sr;
-        if (sr && !sr.sprite.Equals(LevelManager.Instance.IconBank.GetIconFromAbilityEnumValue((int) AbilityToGive)))
-        {
-            sr.sprite = LevelManager.Instance.IconBank.GetIconFromAbilityEnumValue((int)AbilityToGive);
-        }
-    }
-
     private void Awake()
     {
         m_SR = GetComponent<SpriteRenderer>();
@@ -26,7 +15,7 @@ public class AbilityPickup : MonoBehaviour
     private void Start()
     {
         // Set Icon
-        m_SR.sprite = LevelManager.Instance.IconBank.GetIconFromAbilityEnumValue((int)AbilityToGive);
+        m_SR.sprite = GameManager.Instance.IconBank.GetIconFromAbilityEnumValue((int)AbilityToGive);
     }
 
     // + + + + | Functions | + + + +
@@ -36,7 +25,7 @@ public class AbilityPickup : MonoBehaviour
     /// </summary>
     public void OnPickup()
     {
-        AbilityManager am = LevelManager.Instance.Player.gameObject.GetComponent<AbilityManager>();
+        AbilityManager am = GameManager.Instance.CurrentLevelManager.Player.gameObject.GetComponent<AbilityManager>();
         if (am && !am.EnabledAbilities.Exists(x => x.AbilityType == AbilityToGive))
         {
             // Give to the Player!

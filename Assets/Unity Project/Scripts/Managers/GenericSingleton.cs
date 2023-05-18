@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class GenericSingleton<T> : MonoBehaviour where T : Component
+public class GenericSingleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     protected static T m_Instance;
     public static T Instance
@@ -14,12 +15,16 @@ public class GenericSingleton<T> : MonoBehaviour where T : Component
             {
                 // Search for it!
                 m_Instance = FindObjectOfType<T>();
+                
 
                 // And if we don't find it,
                 if (m_Instance == null)
                 {
-                    GameObject newObject = new();
-                    newObject.name = typeof(T).Name;
+                    Debug.Log($"Creating new GenericSingleton of type {typeof(T).Name}!");
+                    GameObject newObject = new()
+                    {
+                        name = "NEW" + typeof(T).Name
+                    };
                     m_Instance = newObject.AddComponent<T>();
                     DontDestroyOnLoad(newObject);
                 }
