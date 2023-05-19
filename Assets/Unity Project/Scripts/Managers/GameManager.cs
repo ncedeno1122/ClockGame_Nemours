@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class GameManager : GenericSingleton<GameManager>
 {
@@ -9,6 +12,7 @@ public class GameManager : GenericSingleton<GameManager>
 
     public IconBankSO IconBank;
 
+    [SerializeField]
     private LevelManager m_CurrentLevelManager;
     public LevelManager CurrentLevelManager
     {
@@ -24,18 +28,26 @@ public class GameManager : GenericSingleton<GameManager>
 
     private new void Awake()
     {
+        Debug.LogFormat($"<color=green>{typeof(GameManager).Name}'s Awake called!</color>");
         // Set Singleton Instance to this!
         if (m_Instance == null)
         {
             m_Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
+        else if (m_Instance != this)
+        {
+            Destroy(gameObject);
+        }
+
+        DontDestroyOnLoad(gameObject);
 
         // Set Framerate
         Application.targetFrameRate = m_TargetFrameRate;
 
         // Fetch the given IconBank!
         IconBank = FetchIconBank();
+
+        
     }
 
     private void Start()
@@ -43,10 +55,56 @@ public class GameManager : GenericSingleton<GameManager>
         
     }
 
+    private void OnEnable()
+    {
+        // Find LevelManager on scene open!
+        //SceneManager.activeSceneChanged += OnActiveSceneChanged;
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        // Find LevelManager on scene open!
+        //SceneManager.activeSceneChanged -= OnActiveSceneChanged;
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
     // + + + + | Functions | + + + + 
 
+    /// <summary>
+    /// Returns the used IconBank.
+    /// </summary>
+    /// <returns></returns>
     private IconBankSO FetchIconBank()
     {
         return Resources.Load("IconBank/MainIconBank") as IconBankSO;
     }
+
+    /// <summary>
+    /// Simply loads the next scene.
+    /// </summary>
+    public void LoadNextScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+    }
+
+    /// <summary>
+    /// Simply quits the application.
+    /// </summary>
+    public void QuitApplication()
+    {
+        // TODO: Probably should do something else here. Is this necessary if it's to be WebGL?
+        Application.Quit();
+    }
+
+    // + + + + | Event Handling | + + + + 
+
+    private void OnSceneLoaded(Scene newScene, LoadSceneMode loadMode)
+    {
+        // Find the LevelManager in this scene!
+        //Debug.Log("Scene changed, trying to find LevelManager!");
+        m_CurrentLevelManager = null;
+        m_CurrentLevelManager = FindObjectOfType<LevelManager>();
+    }
+
 }

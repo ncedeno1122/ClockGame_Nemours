@@ -17,7 +17,6 @@ public class LevelManager : MonoBehaviour
     public LevelClockSO LevelClock; // The Clock and ClockPieces this level will showcase.
     
     public Bounds LevelBounds;
-    public IconBankSO IconBank;
 
     public UnityEvent OnLevelStarted, OnLevelEnded;
 

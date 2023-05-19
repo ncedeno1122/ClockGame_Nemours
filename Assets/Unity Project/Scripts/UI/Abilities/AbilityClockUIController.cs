@@ -42,10 +42,10 @@ public class AbilityClockUIController : MonoBehaviour, IActivatableUI
     private void OnDisable()
     {
         // Unsubscribe from events
-        if (GameManager.Exists)
+        if (GameManager.Exists && GameManager.Instance.CurrentLevelManager != null)
         {
-            GameManager.Instance.CurrentLevelManager.OnLevelStarted.RemoveListener(OnActivate);
-            GameManager.Instance.CurrentLevelManager.OnLevelEnded.RemoveListener(OnDeactivate);
+            GameManager.Instance.CurrentLevelManager?.OnLevelStarted.RemoveListener(OnActivate);
+            GameManager.Instance.CurrentLevelManager?.OnLevelEnded.RemoveListener(OnDeactivate);
         }
     }
 
@@ -151,6 +151,7 @@ public class AbilityClockUIController : MonoBehaviour, IActivatableUI
     {
         m_IsActivated = true;
         m_CanvasGroup.alpha = 1;
+        UpdateUI();
     }
 
     public void OnDeactivate()

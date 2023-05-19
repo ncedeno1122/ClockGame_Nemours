@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
+using TMPro;
 
 public class LevelEndPanelController : MonoBehaviour, IActivatableUI
 {
@@ -14,23 +15,37 @@ public class LevelEndPanelController : MonoBehaviour, IActivatableUI
     private IEnumerator m_MenuOpenCRT;
 
     private CanvasGroup m_CanvasGroup, m_ButtonsPanelCanvasGroup;
-    private Transform m_UICameraTF, m_LevelClockTF;
+
+    private Transform m_UICameraTF, m_LevelClockTF, m_ButtonPanelTF;
+    private Button m_NextLevelButton, m_QuitAppButton;
     private GameObject m_LevelClockGO;
+    private TextMeshProUGUI m_LevelClockText;
 
     private void Awake()
     {
-        m_CanvasGroup = GetComponent<CanvasGroup>();
-        m_ButtonsPanelCanvasGroup = transform.GetChild(1).GetChild(1).GetComponent<CanvasGroup>(); // TODO: MUST be a better way to find this...
-
         // Get Transforms
+        m_ButtonPanelTF = transform.GetChild(1).GetChild(1);
         m_UICameraTF = transform.parent.parent;
         m_LevelClockTF = m_UICameraTF.GetChild(1); // TODO: Find this a better way?
+        
+        // Get Components
+        m_ButtonsPanelCanvasGroup = m_ButtonPanelTF.GetComponent<CanvasGroup>(); // TODO: MUST be a better way to find this...
+        m_CanvasGroup = GetComponent<CanvasGroup>();
+        m_LevelClockText = transform.GetChild(1).GetChild(0).GetChild(1).GetChild(0).GetComponent<TextMeshProUGUI>();
+        m_NextLevelButton = m_ButtonPanelTF.GetChild(0).GetComponent<Button>();
+        m_QuitAppButton = m_ButtonPanelTF.GetChild(1).GetComponent<Button>();
+
+
     }
 
     private void Start()
     {
         // Create LevelClock for show
         CreateLevelClockGO();
+
+        // Set proper button events
+        m_NextLevelButton.onClick.AddListener(GameManager.Instance.LoadNextScene);
+        m_QuitAppButton.onClick.AddListener(GameManager.Instance.QuitApplication);
     }
 
     private void OnEnable()
@@ -42,11 +57,16 @@ public class LevelEndPanelController : MonoBehaviour, IActivatableUI
 
     private void OnDisable()
     {
+        // No matter what, stop all CRTs.
+        StopAllCoroutines();
+
         // Unsub from events
-        if (GameManager.Exists)
+        if (GameManager.Exists && GameManager.Instance.CurrentLevelManager != null)
         {
             GameManager.Instance.CurrentLevelManager.OnLevelEnded.RemoveListener(OnActivate);
             GameManager.Instance.CurrentLevelManager.OnLevelStarted.RemoveListener(OnDeactivate);
+            m_NextLevelButton.onClick.RemoveListener(GameManager.Instance.LoadNextScene);
+            m_QuitAppButton.onClick.RemoveListener(GameManager.Instance.QuitApplication);
         }
     }
 
@@ -77,6 +97,7 @@ public class LevelEndPanelController : MonoBehaviour, IActivatableUI
         float openFadeTime = 0.75f;
         float pauseTime = 0.5f;
         float clockFloatInTime = 1f;
+        float textWriteTimeTotal = 1f;
         float buttonsFadeTime = 1f;
 
         // Fade Open
@@ -93,6 +114,14 @@ public class LevelEndPanelController : MonoBehaviour, IActivatableUI
         }
         m_LevelClockGO.transform.position = m_LevelClockPanelPosition;
 
+        // Write Text
+        string clockText = GameManager.Instance.CurrentLevelManager.LevelClock.Description;
+        for (int textIndex = 0; textIndex <= clockText.Length; textIndex++)
+        {
+            m_LevelClockText.text = clockText.Substring(0, textIndex);
+            yield return new WaitForSeconds(textWriteTimeTotal / clockText.Length);
+        }
+
         // Wait again
         yield return StartCoroutine(WaitUntilTime(pauseTime));
 
@@ -102,6 +131,9 @@ public class LevelEndPanelController : MonoBehaviour, IActivatableUI
             m_ButtonsPanelCanvasGroup.alpha = Mathf.Lerp(0f, 1f, timeHelper/ buttonsFadeTime);
             yield return new WaitForEndOfFrame();
         }
+
+        // Finally, activate Buttons
+        SetButtonsActive(true);
     }
 
     /// <summary>
@@ -118,9 +150,22 @@ public class LevelEndPanelController : MonoBehaviour, IActivatableUI
         // Set Layer
         int levelClockLayer = LayerMask.NameToLayer("LevelClock");
         m_LevelClockGO.layer = levelClockLayer; // TODO: Create utility class for these tags, layers, etc?
-        foreach (Transform go in m_LevelClockGO.transform)
+        foreach(Transform clockPieceTF in m_LevelClockGO.transform)
         {
-            go.gameObject.layer = levelClockLayer;
+            clockPieceTF.gameObject.layer = levelClockLayer;
+        }
+    }
+
+    /// <summary>
+    /// Iterates through all the known buttons, sets their interactability to a given boolean.
+    /// </summary>
+    /// <param name="active"></param>
+    private void SetButtonsActive(bool active)
+    {
+        foreach (Transform buttonTF in m_ButtonPanelTF)
+        {
+            Button btn = buttonTF.GetComponent<Button>();
+            btn.interactable = active;
         }
     }
 
@@ -139,5 +184,8 @@ public class LevelEndPanelController : MonoBehaviour, IActivatableUI
         m_IsActivated = false;
         m_CanvasGroup.alpha = 0f;
         m_ButtonsPanelCanvasGroup.alpha = 0f;
+
+        // Set buttons to inactive!
+        SetButtonsActive(false);
     }
 }
