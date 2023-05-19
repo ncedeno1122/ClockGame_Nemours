@@ -35,6 +35,13 @@ public class AbilityManager : MonoBehaviour
 
         // Find and Equip Abilities
         TotalAbilities = new Ability[] { PendulumScript, HandsScript, ChimeScript, CuckooScript };
+    }
+
+    private void Start()
+    {
+        // Find AbilityClockUI
+        AbilityClockUIController = GameObject.FindObjectOfType<AbilityClockUIController>(); // TODO: Find using UI Singleton or something?
+        AbilityClockUIController.RegisterAbilityManager(this);
 
         // Search for Inspector-enabled Abilities
         foreach (Ability ability in TotalAbilities)
@@ -48,14 +55,9 @@ public class AbilityManager : MonoBehaviour
 
         // Set CurrentAbility
         if (EnabledAbilities.Count > 0)
-        {    
+        {
             CurrentAbility = EnabledAbilities[0];
         }
-    }
-
-    private void Start()
-    {
-        AbilityClockUIController.RegisterAbilityManager(this);
 
         //EnableAbility(PendulumScript);
         //EnableAbility(HandsScript);
@@ -67,6 +69,9 @@ public class AbilityManager : MonoBehaviour
 
     public void NextAbility()
     {
+        // Do nothing if we have no abilities.
+        if (EnabledAbilities.Count == 0) return;
+
         // Map ability index
         m_CurrAbilityIndex = (int) Mathf.Repeat(m_CurrAbilityIndex + 1, EnabledAbilities.Count);
         CurrentAbility = EnabledAbilities[m_CurrAbilityIndex];
@@ -76,6 +81,9 @@ public class AbilityManager : MonoBehaviour
 
     public void PreviousAbility()
     {
+        // Do nothing if we have no abilities.
+        if (EnabledAbilities.Count == 0) return;
+
         // Map ability index
         m_CurrAbilityIndex = (int)Mathf.Repeat(m_CurrAbilityIndex - 1, EnabledAbilities.Count);
         CurrentAbility = EnabledAbilities[m_CurrAbilityIndex];

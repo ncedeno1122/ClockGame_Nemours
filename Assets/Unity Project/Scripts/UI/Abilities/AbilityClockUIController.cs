@@ -116,6 +116,10 @@ public class AbilityClockUIController : MonoBehaviour, IActivatableUI
     {
         // Then, display them properly on the clock
         int enabledAbilities = m_AbilityManager.EnabledAbilities.Count;
+
+        // Do nothing if no abilities are enabled
+        if (enabledAbilities == 0) return;
+
         int enabledAbilityIndex = 0; // Used to set icon position relative to top of circle!
         foreach (Ability ability in m_AbilityManager.EnabledAbilities)
         {
