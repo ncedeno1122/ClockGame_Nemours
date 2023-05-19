@@ -177,6 +177,9 @@ public class LevelEndPanelController : MonoBehaviour, IActivatableUI
 
         m_MenuOpenCRT = MenuOpenCRT();
         StartCoroutine(m_MenuOpenCRT);
+
+        // Disable the Player
+        GameManager.Instance.CurrentLevelManager.Player.ReceivesInput = false;
     }
 
     public void OnDeactivate()

@@ -16,6 +16,7 @@ public class CharacterController2D : MonoBehaviour
     public float JumpForce = 15f;
     public float GravityForce = -20f;
     public float AirSpeedX = 10f;
+    public bool ReceivesInput = true;
     public bool IsGrounded;
     public bool IsJumping = false;
     public bool IsFalling = false;
@@ -99,22 +100,26 @@ public class CharacterController2D : MonoBehaviour
 
     public void OnMoveIA(InputAction.CallbackContext ctx)
     {
+        if (!ReceivesInput) return;
         PlayerMovementVector = ctx.ReadValue<Vector2>();
         m_CurrentState.OnMove(ctx);
     }
     
     public void OnJumpIA(InputAction.CallbackContext ctx)
     {
+        if (!ReceivesInput) return;
         m_CurrentState.OnJump(ctx);
     }
     
     public void OnAbilityIA(InputAction.CallbackContext ctx)
     {
+        if (!ReceivesInput) return;
         m_CurrentState.OnAbility(ctx);
     }
 
     public void OnAbilitySwapIA(InputAction.CallbackContext ctx)
     {
+        if (!ReceivesInput) return;
         m_CurrentState.OnAbilitySwap(ctx);
     }
 
