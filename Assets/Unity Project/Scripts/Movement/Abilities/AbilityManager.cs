@@ -112,6 +112,9 @@ public class AbilityManager : MonoBehaviour
         }
         //Debug.Log($"Enabled {ability.AbilityType}!");
         EnabledAbilities.Add(ability);
+
+        if (CurrentAbility == null) CurrentAbility = ability;
+
         AbilityClockUIController.UpdateUI();
     }
 }
