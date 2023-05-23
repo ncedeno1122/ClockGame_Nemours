@@ -18,6 +18,16 @@ public class PendulumUIController : MonoBehaviour, IActivatableUI
     private RectTransform m_PendulumTf;
     private CanvasGroup m_CanvasGroup;
 
+    private void OnEnable()
+    {
+        OnActivate();
+    }
+
+    private void OnDisable()
+    {
+        OnDeactivate();
+    }
+
     private void Start()
     {
         m_PendulumTf = transform.GetChild(0).GetComponent<RectTransform>();
@@ -89,7 +99,6 @@ public class PendulumUIController : MonoBehaviour, IActivatableUI
     public void OnActivate()
     {
         m_IsActivated = true;
-        m_CanvasGroup.alpha = 1f;
     }
 
     public void OnDeactivate()

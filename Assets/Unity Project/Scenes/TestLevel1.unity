@@ -1257,6 +1257,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6489276109252514562, guid: 09f83080f1ea4c74ea673a16a2b6bbdf, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6489276109252514562, guid: 09f83080f1ea4c74ea673a16a2b6bbdf, type: 3}
       propertyPath: LevelClock
       value: 
       objectReference: {fileID: 11400000, guid: 18914cec84f6b4b469abed3c6f895bc3, type: 2}
