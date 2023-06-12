@@ -434,6 +434,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8182192354929025462}
     m_Modifications:
+    - target: {fileID: 6298775358913848288, guid: cf3c7c35a9026834fb64d52ee9f07d6c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c18640ed68a4c964ea62d926faf78492, type: 3}
+    - target: {fileID: 6298775358913848288, guid: cf3c7c35a9026834fb64d52ee9f07d6c, type: 3}
+      propertyPath: m_Color.a
+      value: 0.627451
+      objectReference: {fileID: 0}
+    - target: {fileID: 6298775359550906984, guid: cf3c7c35a9026834fb64d52ee9f07d6c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 6298775359550906984, guid: cf3c7c35a9026834fb64d52ee9f07d6c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 6298775359550906984, guid: cf3c7c35a9026834fb64d52ee9f07d6c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6298775359550906985, guid: cf3c7c35a9026834fb64d52ee9f07d6c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: a1883aa1558872f4ba49eeb350143b69, type: 3}
+    - target: {fileID: 6298775359550906985, guid: cf3c7c35a9026834fb64d52ee9f07d6c, type: 3}
+      propertyPath: m_Color.a
+      value: 0.8627451
+      objectReference: {fileID: 0}
     - target: {fileID: 6298775359806314988, guid: cf3c7c35a9026834fb64d52ee9f07d6c, type: 3}
       propertyPath: m_Name
       value: AbilityClockPanel
