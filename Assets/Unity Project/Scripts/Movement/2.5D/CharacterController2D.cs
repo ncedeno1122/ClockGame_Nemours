@@ -34,8 +34,10 @@ public class CharacterController2D : MonoBehaviour
         }
     }
 
+    public const float GROUNDCHECK_NORMAL = 0.3f;
+    public const float GROUNDCHECK_PLATFORMS = 0.65f;
     [Range(0.01f, 1f)]
-    public float GroundCheckDistance = 0.3f;
+    public float GroundCheckDistance = GROUNDCHECK_NORMAL;
 
     public Vector2 PlayerMovementVector = Vector2.zero;
     public Vector3 CharacterVelocity = Vector3.zero;

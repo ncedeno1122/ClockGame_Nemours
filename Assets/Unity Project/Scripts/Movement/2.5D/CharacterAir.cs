@@ -9,6 +9,7 @@ public class CharacterAir : CharacterState
 
     public override void OnEnter()
     {
+        m_Context.GroundCheckDistance = CharacterController2D.GROUNDCHECK_NORMAL;
         CheckAerialState();
     }
 

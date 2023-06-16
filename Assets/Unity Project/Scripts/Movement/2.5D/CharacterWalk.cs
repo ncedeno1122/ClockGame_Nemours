@@ -74,6 +74,10 @@ public class CharacterWalk : CharacterState
         Rigidbody platformRb = m_Context.LeftCastHit.rigidbody ?? m_Context.RightCastHit.rigidbody;
         if (platformRb && platformRb.gameObject.layer == LayerMask.NameToLayer("Platforms"))
         {
+            // Set our GroundCheckDistance to MORE
+            m_Context.GroundCheckDistance = CharacterController2D.GROUNDCHECK_PLATFORMS;
+
+            // TogglePositionBlock?
             TogglePositionBlockScript tpbs = platformRb.GetComponent<TogglePositionBlockScript>();
             if (tpbs && tpbs.IsMoving)
             {
@@ -84,6 +88,16 @@ public class CharacterWalk : CharacterState
                 m_Context.Rigidbody.MovePosition(m_Context.Rigidbody.position + platformStepOffset * Time.deltaTime);
                 m_Context.Rigidbody.velocity = Vector3.zero;
             }
+            // Other?
+            else
+            {
+                m_Context.Rigidbody.MovePosition(m_Context.Rigidbody.position + platformRb.velocity * Time.deltaTime);
+                m_Context.Rigidbody.velocity = Vector3.zero;
+            }
+        }
+        else
+        {
+            m_Context.GroundCheckDistance = CharacterController2D.GROUNDCHECK_NORMAL;
         }
     }
 
