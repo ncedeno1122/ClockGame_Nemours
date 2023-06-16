@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
-/// A utility class used to invoke an event upon contact with the player.
+/// A utility class used to invoke an event upon contact with the player's TRIGGER collider.
 /// </summary>
 public class OnTriggerPlayerEvent : MonoBehaviour
 {
@@ -14,7 +14,7 @@ public class OnTriggerPlayerEvent : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && other.isTrigger)
         {
             OnPlayerTriggerEvent?.Invoke();
         }
