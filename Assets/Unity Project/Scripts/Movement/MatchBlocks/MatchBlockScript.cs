@@ -20,6 +20,7 @@ public class MatchBlockScript : MonoBehaviour
 
     private void OnValidate()
     {
+        if (gameObject.scene != null) return; // Don't run if this is an uninstantiated prefab!
         UpdateGraphics();
     }
 
