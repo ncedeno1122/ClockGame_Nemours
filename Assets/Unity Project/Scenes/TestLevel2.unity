@@ -1495,12 +1495,35 @@ PrefabInstance:
       propertyPath: TargetValue
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 1426826502685447809, guid: 1bfcbdcb30f420646b2daa6e5ee38c6d, type: 3}
+      propertyPath: OnMatchEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1426826502685447809, guid: 1bfcbdcb30f420646b2daa6e5ee38c6d, type: 3}
+      propertyPath: OnMatchEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1035302474}
+    - target: {fileID: 1426826502685447809, guid: 1bfcbdcb30f420646b2daa6e5ee38c6d, type: 3}
+      propertyPath: OnMatchEvent.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Toggle
+      objectReference: {fileID: 0}
     - target: {fileID: 1426826502685447820, guid: 1bfcbdcb30f420646b2daa6e5ee38c6d, type: 3}
       propertyPath: m_Name
       value: MatchBlockRow
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1bfcbdcb30f420646b2daa6e5ee38c6d, type: 3}
+--- !u!114 &1035302474 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1501918289716988180, guid: 6372496c74eb77b4ab86287314631564, type: 3}
+  m_PrefabInstance: {fileID: 900377647}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 001f11a75986c3a419f6da734d679d7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1072408366
 GameObject:
   m_ObjectHideFlags: 0

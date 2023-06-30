@@ -55,28 +55,28 @@ public class MatchBlockScript : MonoBehaviour
     {
         // TODO: Need better way to do this
         Renderer currRenderer = transform.GetComponent<Renderer>();
-        if (!m_IsLocked)
+        if (!m_IsLocked && Application.isPlaying)
         {
 
             switch (m_CurrentValue)
             {
                 case MatchBlockValue.INVALID:
-                    currRenderer.sharedMaterial.color = Color.yellow;
+                    currRenderer.material.color = Color.yellow;
                     break;
                 case MatchBlockValue.RED:
-                    currRenderer.sharedMaterial.color = Color.red;
+                    currRenderer.material.color = Color.red;
                     break;
                 case MatchBlockValue.GREEN:
-                    currRenderer.sharedMaterial.color = Color.green;
+                    currRenderer.material.color = Color.green;
                     break;
                 case MatchBlockValue.BLUE:
-                    currRenderer.sharedMaterial.color = Color.blue;
+                    currRenderer.material.color = Color.blue;
                     break;
             }
         }
         else
         {
-            currRenderer.sharedMaterial.color = Color.black;
+            currRenderer.material.color = Color.black;
         }
     }
 
