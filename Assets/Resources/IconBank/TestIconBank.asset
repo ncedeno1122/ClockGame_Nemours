@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 854ad3d0b438664469ddf9a646d4418f, type: 3}
-  m_Name: MainIconBank
+  m_Name: TestIconBank
   m_EditorClassIdentifier: 
-  PendulumIcon: {fileID: 1135363660, guid: 8ba09540e45a722469e145083df3e424, type: 3}
-  HandsIcon: {fileID: 830916362, guid: 2554f87f3ae4f4041abdcd4494c950c5, type: 3}
-  ChimeIcon: {fileID: 767844784, guid: 4283460dcc057124ab1f93740dad7f32, type: 3}
-  CuckooIcon: {fileID: -2096193481, guid: c7b24d940ed947b4e8349ebc5e099cc2, type: 3}
+  PendulumIcon: {fileID: 21300000, guid: 28e8d4aa17948d141a7e122ac1105260, type: 3}
+  HandsIcon: {fileID: 21300000, guid: e152098293f3ff04793b91435f3de6ec, type: 3}
+  ChimeIcon: {fileID: 21300000, guid: 04bbfb76af4d90945916a4a9e67f6be9, type: 3}
+  CuckooIcon: {fileID: 21300000, guid: f666fb47d9e760d44a42bee19672bb29, type: 3}
   InvalidIcon: {fileID: 21300000, guid: fedc0f62995d089418b00cf7be9b38d2, type: 3}

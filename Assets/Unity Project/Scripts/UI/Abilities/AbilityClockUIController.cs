@@ -10,6 +10,8 @@ public class AbilityClockUIController : MonoBehaviour, IActivatableUI
     private bool m_IsActivated;
     public bool IsActivated { get => m_IsActivated; set => m_IsActivated = value; }
 
+    private float m_IconRadius = 50f;
+
     private CanvasGroup m_CanvasGroup;
     public AbilityManager m_AbilityManager;
     public RectTransform AbilityIconsTF;
@@ -125,8 +127,8 @@ public class AbilityClockUIController : MonoBehaviour, IActivatableUI
         {
             int totalAbilityIndex = (int)ability.AbilityType - 1;
             m_AbilityIconTFs[totalAbilityIndex].anchoredPosition = new Vector3(
-                    Mathf.Sin((enabledAbilityIndex * (360f / enabledAbilities)) * Mathf.Deg2Rad) * 50f,
-                    Mathf.Cos((enabledAbilityIndex * (360f / enabledAbilities)) * Mathf.Deg2Rad) * 50f); // Sin for X, then Cos for Y to have icons align to the top!
+                    Mathf.Sin((enabledAbilityIndex * (360f / enabledAbilities)) * Mathf.Deg2Rad) * m_IconRadius,
+                    Mathf.Cos((enabledAbilityIndex * (360f / enabledAbilities)) * Mathf.Deg2Rad) * m_IconRadius); // Sin for X, then Cos for Y to have icons align to the top!
             enabledAbilityIndex++;
         }
 
