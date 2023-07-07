@@ -46,8 +46,8 @@ public class AbilityClockUIController : MonoBehaviour, IActivatableUI
         // Unsubscribe from events
         if (GameManager.Exists && GameManager.Instance.CurrentLevelManager != null)
         {
-            GameManager.Instance.CurrentLevelManager?.OnLevelStarted.RemoveListener(OnActivate);
-            GameManager.Instance.CurrentLevelManager?.OnLevelEnded.RemoveListener(OnDeactivate);
+            GameManager.Instance.CurrentLevelManager.OnLevelStarted.RemoveListener(OnActivate);
+            GameManager.Instance.CurrentLevelManager.OnLevelEnded.RemoveListener(OnDeactivate);
         }
     }
 
@@ -142,14 +142,7 @@ public class AbilityClockUIController : MonoBehaviour, IActivatableUI
     {
         for (int i = 0; i < m_AbilityManager.TotalAbilities.Length; i++)
         {
-            if (m_AbilityManager.TotalAbilities[i].IsEnabled)
-            {
-                m_AbilityIconTFs[i].gameObject.GetComponent<Image>().enabled = true;
-            }
-            else
-            {
-                m_AbilityIconTFs[i].gameObject.GetComponent<Image>().enabled = false;
-            }
+            m_AbilityIconTFs[i].gameObject.GetComponent<Image>().enabled = m_AbilityManager.TotalAbilities[i].IsEnabled;
         }
     }
 
