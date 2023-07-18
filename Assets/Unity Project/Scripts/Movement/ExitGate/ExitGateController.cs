@@ -8,10 +8,13 @@ public class ExitGateController : MonoBehaviour
 
     private LevelManager m_LevelManager;
 
+    private WorldAudioSourceComponent m_WASC;
+
     private void Start()
     {
         // Get current LevelManager;
         m_LevelManager = GameManager.Instance.CurrentLevelManager;
+        m_WASC = GetComponentInChildren<WorldAudioSourceComponent>();
     }
 
     // + + + + | Functions | + + + + 
@@ -31,6 +34,10 @@ public class ExitGateController : MonoBehaviour
         m_LevelManager.HandleLevelEnd();
         m_IsExiting = true;
         Debug.Log("Player can exit!");
+        
+        // Audio
+        m_WASC.AudioSource.loop = false;
+        m_WASC.AudioSource.PlayOneShot(AudioManager.Instance.CurrentSoundBank.GetSFXClip(SFXClips.EXIT_GATE));
 
         return true;
     }

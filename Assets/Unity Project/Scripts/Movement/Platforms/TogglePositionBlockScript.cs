@@ -14,11 +14,13 @@ public class TogglePositionBlockScript : MonoBehaviour
     public List<Rigidbody> EntitiesOnBlock = new();
 
     private IEnumerator m_MoveCRT;
-    private Rigidbody m_Rigidbody;
+    private Rigidbody m_Rigidbody; 
+    private WorldAudioSourceComponent m_WASC;
 
     private void Awake()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
+        m_WASC = GetComponentInChildren<WorldAudioSourceComponent>();
 
         // Set Origin
         m_OriginPosition = transform.position;
@@ -75,6 +77,10 @@ public class TogglePositionBlockScript : MonoBehaviour
         Vector3 originPos = m_OriginPosition + (toggleOn ? OffOffset : OnOffset);
         Vector3 targetPos = m_OriginPosition + (toggleOn ? OnOffset : OffOffset);
         IsMoving = true;
+        
+        // Audio
+        m_WASC.AudioSource.loop = true;
+        m_WASC.AudioSource.PlayOneShot(AudioManager.Instance.CurrentSoundBank.GetSFXClip(SFXClips.MOVING_PLATFORM_MOVE));
 
         for (float time = 0f; time < MoveTime; time += Time.deltaTime)
         {
@@ -89,6 +95,11 @@ public class TogglePositionBlockScript : MonoBehaviour
 
             yield return new WaitForFixedUpdate();
         }
+        
+        // Audio
+        m_WASC.AudioSource.Stop();
+        m_WASC.AudioSource.loop = false;
+        m_WASC.AudioSource.PlayOneShot(AudioManager.Instance.CurrentSoundBank.GetSFXClip(SFXClips.MOVING_PLATFORM_FINISH));
 
         // Terminate CRT
         IsMoving = false;

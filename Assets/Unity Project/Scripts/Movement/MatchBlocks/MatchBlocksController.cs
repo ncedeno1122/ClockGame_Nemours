@@ -11,9 +11,12 @@ public class MatchBlocksController : MonoBehaviour
     public MatchBlockValue TargetValue;
     public UnityEvent OnMatchEvent;
 
+    private WorldAudioSourceComponent m_WASC;
+
     private void Awake()
     {
         m_MatchBlocks = GetComponentsInChildren<MatchBlockScript>().ToList();
+        m_WASC = GetComponentInChildren<WorldAudioSourceComponent>();
     }
 
     private void Start()
@@ -54,10 +57,20 @@ public class MatchBlocksController : MonoBehaviour
     {
         if (m_MatchBlocks.Contains(matchBlock))
         {
-            if (AreMatchingTargetValue())
+            if (AreMatchingTargetValue()) // Do we have a Match?
             {
                 LockMatchBlockChildren();
                 OnMatchEvent?.Invoke();
+                
+                // Audio
+                m_WASC.AudioSource.pitch = 1f;
+                m_WASC.AudioSource.PlayOneShot(AudioManager.Instance.CurrentSoundBank.GetSFXClip(SFXClips.CORRECT_CHIME));
+            }
+            else // If not,
+            {
+                // Audio
+                m_WASC.AudioSource.pitch = Random.Range(0.75f, 1.25f);
+                m_WASC.AudioSource.PlayOneShot(AudioManager.Instance.CurrentSoundBank.GetSFXClip(SFXClips.OPTION_BELL_1));
             }
         }
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -16,11 +17,25 @@ public class RotatingPlatformController : MonoBehaviour
     //[SerializeField] private Rigidbody m_ParentRb;
     [SerializeField] private Rigidbody[] m_PlatformRbArray;
 
+    private WorldAudioSourceComponent m_WASC;
+
     private void Awake()
     {
         m_PlatformParentTF = transform.GetChild(0);
         //m_ParentRb = m_PlatformParentTF.GetComponent<Rigidbody>();
         m_PlatformRbArray = m_PlatformParentTF.GetComponentsInChildren<Rigidbody>();
+        m_WASC = GetComponentInChildren<WorldAudioSourceComponent>();
+    }
+
+    private void Start()
+    {
+        // Audio
+        if (RotatesAutonomously)
+        {
+            m_WASC.AudioSource.clip = AudioManager.Instance.CurrentSoundBank.GetSFXClip(SFXClips.MOVING_PLATFORM_MOVE);
+            m_WASC.AudioSource.loop = true;
+            m_WASC.AudioSource.Play();
+        }
     }
 
     private void OnValidate()
@@ -77,7 +92,7 @@ public class RotatingPlatformController : MonoBehaviour
     public void HandleRotateSingleCall()
     {
         // Don't try if we're already rotating!
-        if (m_IsRotatingSingleCall) return;
+        if (m_IsRotatingSingleCall || RotatesAutonomously) return;
 
         IEnumerator rotateSingleCallCRT = RotateSingleCall();
         StartCoroutine(rotateSingleCallCRT);
@@ -90,6 +105,10 @@ public class RotatingPlatformController : MonoBehaviour
 
         m_IsRotatingSingleCall = true;
 
+        // Audio
+        m_WASC.AudioSource.loop = true;
+        m_WASC.AudioSource.PlayOneShot(AudioManager.Instance.CurrentSoundBank.GetSFXClip(SFXClips.MOVING_PLATFORM_MOVE));
+        
         // Test Rotation
         float platAngleOffset;
         Rigidbody platRb;
@@ -112,6 +131,10 @@ public class RotatingPlatformController : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
+        // Audio
+        m_WASC.AudioSource.loop = false;
+        m_WASC.AudioSource.Stop();
+        m_WASC.AudioSource.PlayOneShot(AudioManager.Instance.CurrentSoundBank.GetSFXClip(SFXClips.MOVING_PLATFORM_FINISH));
 
         m_IsRotatingSingleCall = false;
         //Debug.Log($"Done RotatingSingleCall!");
