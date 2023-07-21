@@ -85,7 +85,11 @@ public class GameManager : GenericSingleton<GameManager>
     /// </summary>
     public void LoadNextScene()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+        if (SceneManager.GetActiveScene().buildIndex + 1 > SceneManager.sceneCount)
+        {
+            SceneManager.LoadScene(0); // Load Menu if nothing else
+        }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1, LoadSceneMode.Single);
     }
 
     /// <summary>
