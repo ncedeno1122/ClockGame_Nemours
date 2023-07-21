@@ -17,6 +17,9 @@ public class CharacterChimeState : CharacterState
         //Debug.Log("Entering ChimeState!");
 
         m_ChimeAbility.OnAbility();
+        
+        // Audio
+        m_Context.WASC.AudioSource.PlayOneShot(AudioManager.Instance.CurrentSoundBank.GetSFXClip(SFXClips.CHIME));
     }
 
     public override void OnExit()

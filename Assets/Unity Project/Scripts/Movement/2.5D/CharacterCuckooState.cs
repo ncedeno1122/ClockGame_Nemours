@@ -21,6 +21,9 @@ public class CharacterCuckooState : CharacterState
         }
 
         m_Context.Animator.SetTrigger("CuckooTrigger");
+        
+        // Audio
+        m_Context.WASC.AudioSource.PlayOneShot(AudioManager.Instance.CurrentSoundBank.GetSFXClip(SFXClips.CUCKOO));
     }
 
     public override void OnExit()

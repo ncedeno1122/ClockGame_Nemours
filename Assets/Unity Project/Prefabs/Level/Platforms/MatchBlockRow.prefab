@@ -70,7 +70,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: -2772305377060060167, guid: cfb34660085c1774fa4290f96ef2e9f8, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.465
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -270,22 +270,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MatchBlocks: []
-  TargetValue: 1
+  TargetValue: 2
   OnMatchEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: TogglePositionBlockScript, Assembly-CSharp
-        m_MethodName: Toggle
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TogglePositionBlockScript, Assembly-CSharp
         m_MethodName: Toggle

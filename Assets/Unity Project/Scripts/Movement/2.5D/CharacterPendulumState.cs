@@ -17,6 +17,9 @@ public class CharacterPendulumState : CharacterState
         //Debug.Log("Entering PendulumState!");
 
         m_PendulumAbility.OnAbility();
+        
+        // Audio
+        m_Context.WASC.AudioSource.PlayOneShot(AudioManager.Instance.CurrentSoundBank.GetSFXClip(SFXClips.PENDULUM));
     }
 
     public override void OnExit()

@@ -21,6 +21,10 @@ public class CharacterHandsState : CharacterState
         m_Context.GroundCheckDistance = 1f;
 
         Debug.Log("Entering HandsState!");
+        
+        // Audio
+        m_Context.WASC.AudioSource.loop = true;
+        m_Context.WASC.AudioSource.PlayOneShot(AudioManager.Instance.CurrentSoundBank.GetSFXClip(SFXClips.HANDS));
     }
 
     public override void OnExit()
@@ -31,6 +35,10 @@ public class CharacterHandsState : CharacterState
         m_HandsAbility.UpdateHandsObservers(Vector2.zero);
 
         Debug.Log("Exiting HandsState!");
+        
+        // Audio
+        m_Context.WASC.AudioSource.loop = false;
+        m_Context.WASC.AudioSource.Stop();
     }
 
     protected override void PreUpdate()

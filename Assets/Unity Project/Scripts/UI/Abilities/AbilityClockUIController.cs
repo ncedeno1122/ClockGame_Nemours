@@ -20,6 +20,8 @@ public class AbilityClockUIController : MonoBehaviour, IActivatableUI
     public GameObject AbilityIconPrefab;
     public TextMeshProUGUI DebugAbilityText;
     public IconBankSO IconBank;
+    
+    private WorldAudioSourceComponent m_WASC;
 
 
     private void Awake()
@@ -27,6 +29,7 @@ public class AbilityClockUIController : MonoBehaviour, IActivatableUI
         m_CanvasGroup = GetComponent<CanvasGroup>();
         AbilityIconsTF = transform.GetChild(0).GetChild(0).GetComponent<RectTransform>();
         ClockHandTF = transform.GetChild(0).GetChild(1).GetComponent<RectTransform>();
+        m_WASC = GetComponentInChildren<WorldAudioSourceComponent>();
     }
 
     private void Start()
@@ -136,6 +139,10 @@ public class AbilityClockUIController : MonoBehaviour, IActivatableUI
         int currAbilityIndex = m_AbilityManager.CurrAbilityIndex; // Use enum for this! But the enum MUST be in proper order!!!
         float clockHandAngle = (currAbilityIndex * (360f / enabledAbilities)) * -1f;
         ClockHandTF.rotation = Quaternion.Euler(Vector3.forward * clockHandAngle);
+        
+        // Audio
+        m_WASC.AudioSource.loop = false;
+        m_WASC.AudioSource.PlayOneShot(AudioManager.Instance.CurrentSoundBank.GetSFXClip(SFXClips.PENDULUM));
     }
 
     private void UpdateEnabledSprites()

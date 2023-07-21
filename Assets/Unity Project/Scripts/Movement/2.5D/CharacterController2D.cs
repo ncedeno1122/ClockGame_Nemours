@@ -57,7 +57,10 @@ public class CharacterController2D : MonoBehaviour
 
     public AbilityManager AbilityManager;
 
-    private void Awake()
+    private WorldAudioSourceComponent m_WASC;
+    public WorldAudioSourceComponent WASC => m_WASC;
+
+        private void Awake()
     {
         ModelTransform = transform.GetChild(0);
 
@@ -71,6 +74,8 @@ public class CharacterController2D : MonoBehaviour
         m_JumpIA = m_PlayerInput.actions["Jump"];
         m_AbilityIA = m_PlayerInput.actions["Ability"];
         m_AbilitySwapIA = m_PlayerInput.actions["AbilitySwap"];
+        
+        m_WASC = GetComponentInChildren<WorldAudioSourceComponent>();
     }
 
     void Start()
