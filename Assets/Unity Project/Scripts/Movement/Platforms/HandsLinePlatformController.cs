@@ -16,7 +16,7 @@ public class HandsLinePlatformController : MonoBehaviour
 
     [SerializeField] private Rigidbody m_PlatformRb;
 
-    public Transform FromPositionTf, ToPositionTf;
+    public Transform FromPositionTf, ToPositionTf, CosmeticTrackMeshTf;
 
     private void OnValidate()
     {
@@ -39,6 +39,9 @@ public class HandsLinePlatformController : MonoBehaviour
                 case "ToPosition":
                     ToPositionTf = tf;
                     break;
+                case "CosmeticTrackMesh":
+                    CosmeticTrackMeshTf = tf;
+                    break;
                 default:
                     break;
             }
@@ -56,6 +59,14 @@ public class HandsLinePlatformController : MonoBehaviour
             m_DirectionFromTowardsTo = (ToPositionTf.position - FromPositionTf.position).normalized;
         }
         
+        // Size CosmeticTrackMesh
+        CosmeticTrackMeshTf.position = Vector3.Lerp(ToPositionTf.position, FromPositionTf.position, 0.5f);
+        CosmeticTrackMeshTf.localScale = new Vector3(
+            0.25f,
+            0.25f,
+            Vector3.Distance(ToPositionTf.position, FromPositionTf.position));
+        CosmeticTrackMeshTf.LookAt(ToPositionTf);
+        CosmeticTrackMeshTf.localPosition += Vector3.forward; // Send it away from the camera
     }
 
     void Start()
