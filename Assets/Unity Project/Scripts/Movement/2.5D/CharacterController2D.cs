@@ -35,6 +35,8 @@ public class CharacterController2D : MonoBehaviour
     [Range(0.01f, 1f)]
     public float GroundCheckDistance = GROUNDCHECK_NORMAL;
 
+    public float GroundCheckHeightOffset = 0f;
+
     public Vector2 PlayerMovementVector = Vector2.zero;
     public Vector3 CharacterVelocity = Vector3.zero;
 
@@ -148,8 +150,8 @@ public class CharacterController2D : MonoBehaviour
     // TODO: This function will need to be optimized.
     public void GroundCheck()
     {
-        Vector3 leftCastPoint = m_BoxCollider.transform.position + new Vector3(-m_BoxCollider.size.x/2f, -m_BoxCollider.size.y/4f);
-        Vector3 rightCastPoint = m_BoxCollider.transform.position + new Vector3(m_BoxCollider.size.x/2f, -m_BoxCollider.size.y/4f);
+        Vector3 leftCastPoint = m_BoxCollider.transform.position + new Vector3(-m_BoxCollider.size.x/2f, -m_BoxCollider.size.y/4f) + Vector3.up * GroundCheckHeightOffset;
+        Vector3 rightCastPoint = m_BoxCollider.transform.position + new Vector3(m_BoxCollider.size.x/2f, -m_BoxCollider.size.y/4f) + Vector3.up * GroundCheckHeightOffset;
         Vector3 localDownDirection = transform.TransformDirection(Vector3.down);
         LayerMask mask = LayerMask.GetMask("StaticLevel", "Platforms");
 

@@ -7,7 +7,21 @@ using UnityEngine.InputSystem;
 public class CharacterHandsState : CharacterState
 {
     private float m_StoredGroundCheckDistance;
+    private float m_PreferredGroundCheckHeightOffset = 0.25f;
     private HandsAbility m_HandsAbility;
+    private Vector3 m_PlayerOffsetFromPlatform;
+    public Vector3 PlayerOffsetFromPlatform //TODO: Should probably remove in favor of if statement where assignment occurs...
+    {
+        get => m_PlayerOffsetFromPlatform;
+        set
+        {
+            if (m_PlayerOffsetFromPlatform == Vector3.zero)
+            {
+                m_PlayerOffsetFromPlatform = value;
+                //Debug.Log($"CharacterHandsState - Offset from the ground is {value}");
+            }
+        }
+    } 
 
     public CharacterHandsState(CharacterController2D context) : base(context)
     {
@@ -19,6 +33,7 @@ public class CharacterHandsState : CharacterState
     {
         // Change GroundCheckDistance
         m_Context.GroundCheckDistance = 1f;
+        m_Context.GroundCheckHeightOffset = m_PreferredGroundCheckHeightOffset;
 
         Debug.Log("Entering HandsState!");
         
@@ -31,6 +46,7 @@ public class CharacterHandsState : CharacterState
     {
         // Revert GroundCheckDistance
         m_Context.GroundCheckDistance = m_StoredGroundCheckDistance;
+        m_Context.GroundCheckHeightOffset = 0f;
 
         m_HandsAbility.UpdateHandsObservers(Vector2.zero);
 
@@ -69,11 +85,19 @@ public class CharacterHandsState : CharacterState
             // Switch to walk to see if we can re-hands!
             m_Context.ChangeState(new CharacterWalk(m_Context));
         }
-
+        
+        // Note: Could be 'Platform'-tagged OR 'StaticLevel'-tagged
         // Moving Platform?
         Rigidbody platformRb = m_Context.LeftCastHit.rigidbody ?? m_Context.RightCastHit.rigidbody;
         if (platformRb && platformRb.gameObject.layer == LayerMask.NameToLayer("Platforms"))
         {
+            // If not grounded, store positional offset! NOTE: This can only happen once :D
+            // TODO: Rid of property and limit here?
+            PlayerOffsetFromPlatform = new Vector3(
+                m_Context.Rigidbody.position.x - platformRb.position.x,
+                (m_Context.LeftCastHit.rigidbody ? m_Context.LeftCastHit.distance : m_Context.RightCastHit.distance) * 2f
+            );
+            
             // TogglePositionBlockScript
             TogglePositionBlockScript tpbs = platformRb.GetComponent<TogglePositionBlockScript>();
             if (tpbs && tpbs.IsMoving)
@@ -92,6 +116,21 @@ public class CharacterHandsState : CharacterState
             if (hmps)
             {
                 m_Context.Rigidbody.MovePosition(m_Context.Rigidbody.position + hmps.MoveVelocity * (hmps.FlySpeed * Time.deltaTime));
+            }
+            
+            // HandsLinePlatformController
+            HandsLinePlatformController hlpc = platformRb.GetComponentInParent<HandsLinePlatformController>();
+            if (hlpc)
+            {
+                m_Context.Rigidbody.MovePosition(Vector3.Lerp(hlpc.FromPositionTf.position, hlpc.ToPositionTf.position, hlpc.NormalizedPositionValue) + m_PlayerOffsetFromPlatform);
+            }
+            
+            // HandsBoundedFreePlatformController
+            HandsBoundedFreePlatformController hbfpc =
+                platformRb.GetComponentInParent<HandsBoundedFreePlatformController>();
+            if (hbfpc)
+            {
+                m_Context.Rigidbody.MovePosition(m_Context.Rigidbody.position + hbfpc.MoveVelocity * (hbfpc.MoveSpeed * Time.deltaTime));
             }
         }
     }

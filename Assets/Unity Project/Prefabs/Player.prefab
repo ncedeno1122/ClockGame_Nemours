@@ -649,6 +649,7 @@ MonoBehaviour:
   IsJumping: 0
   IsFalling: 0
   GroundCheckDistance: 0.4
+  GroundCheckHeightOffset: 0
   PlayerMovementVector: {x: 0, y: 0}
   CharacterVelocity: {x: 0, y: 0, z: 0}
   LeftCastGO: {fileID: 0}
