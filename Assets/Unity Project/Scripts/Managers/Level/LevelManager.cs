@@ -45,6 +45,7 @@ public class LevelManager : MonoBehaviour
             Checkpoints.Clear();
         }
         Checkpoints.AddRange(FindObjectsOfType<Checkpoint>());
+        Checkpoints = Checkpoints.OrderBy(x => x.CheckpointNumber).ToList<Checkpoint>(); // Does name contain number? If so, order by that!
 
         // Try and get and format all ClockPieces as well!
         if (ClockPieces.Count > 0)
